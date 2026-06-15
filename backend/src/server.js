@@ -1,4 +1,5 @@
 import express from "express"
+import cors from "cors"
 import dotenv from "dotenv"
 import authRoutes from "./routes/auth.routes.js"
 import messageRoutes from "./routes/message.routes.js"
@@ -10,18 +11,12 @@ const app = express()
 const PORT = process.env.PORT || 3001
 const FRONTEND_URL = process.env.FRONTEND_URL
 
-app.use((req, res, next) => {
-    if (FRONTEND_URL) {
-        res.setHeader("Access-Control-Allow-Origin", FRONTEND_URL)
-        res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-        res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
-        res.setHeader("Access-Control-Allow-Credentials", "true")
-    }
-    if (req.method === "OPTIONS") {
-        return res.sendStatus(204)
-    }
-    next()
-})
+if (FRONTEND_URL) {
+    app.use(cors({
+        origin: FRONTEND_URL,
+        credentials: true,
+    }))
+}
 
 app.use(express.json())
 
