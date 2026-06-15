@@ -1,5 +1,6 @@
 import User from "../models/user.model.js"
 import generateToken from "../library/utils.js"
+import { sendWelcomeEmail } from "../email/emailHandler.js"
 
 export const signup = async (req, res) => {
     const { fullName, email, password } = req.body
@@ -15,6 +16,14 @@ export const signup = async (req, res) => {
         }
 
         const newUser = await User.create({ fullName, email, password })
+
+        try {
+            await sendWelcomeEmail({ to: email, name: fullName })
+            console.log("Welcome email sent successfully.")
+        } catch (error) {
+            console.log("Error sending welcome email: ", error)
+        }
+
         generateToken(newUser._id, res)
 
         res.status(201).json({
@@ -24,7 +33,6 @@ export const signup = async (req, res) => {
                 fullName: newUser.fullName,
                 email: newUser.email,
                 profilePic: newUser.profilePic,
-                password: newUser.password
             },
         })
     } catch (error) {
