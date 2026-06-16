@@ -24,12 +24,10 @@ export const signup = async (req, res) => {
 
         const newUser = await User.create({ fullName, email, password })
 
-        try {
-            await sendWelcomeEmail({ to: email, name: fullName })
-            console.log("Welcome email sent successfully.")
-        } catch (error) {
-            console.log("Error sending welcome email: ", error)
-        }
+        // Send email asynchronously without blocking response
+        sendWelcomeEmail({ to: email, name: fullName })
+            .then(() => console.log("Welcome email sent successfully."))
+            .catch((error) => console.log("Error sending welcome email: ", error))
 
         generateToken(newUser._id, res)
 
