@@ -24,10 +24,14 @@ export const signup = async (req, res) => {
 
         const newUser = await User.create({ fullName, email, password })
 
-        // Send email asynchronously without blocking response
-        sendWelcomeEmail({ to: email, name: fullName })
-            .then(() => console.log("You will receive an welcome email"))
-            .catch((error) => console.log("Error sending welcome email: ", error))
+        // Send welcome email and wait for completion (may delay response)
+        try {
+            const emailResult = await sendWelcomeEmail({ to: email, name: fullName })
+            const id = emailResult && emailResult.messageId ? emailResult.messageId : null
+            console.info(`Welcome email sent${id ? ` (id: ${id})` : ''} to ${email}`)
+        } catch (error) {
+            console.error('Error sending welcome email:', error.message || error)
+        }
 
         generateToken(newUser._id, res)
 
@@ -82,14 +86,14 @@ export const login = async (req, res) => {
 }
 
 export const logout = (_, res) => {
-    res.cookie("jwt", "", {maxAge: 0})
-    res.status(200).json({message: "Logged out successfully"})
+    res.cookie("jwt", "", { maxAge: 0 })
+    res.status(200).json({ message: "Logged out successfully" })
 }
 
 export const updateProfile = async (req, res) => {
     try {
         const { profilePic } = req.body
-        if(!profilePic) return res.status(400).json({message: "Profile pic is required"})
+        if (!profilePic) return res.status(400).json({ message: "Profile pic is required" })
 
         const userId = req.user._id
 
@@ -111,6 +115,6 @@ export const updateProfile = async (req, res) => {
         })
     } catch (error) {
         console.log("Error in update profile: ", error)
-        res.status(500).json({message: "Internal server error"})
+        res.status(500).json({ message: "Internal server error" })
     }
 }
