@@ -26,7 +26,7 @@ export const signup = async (req, res) => {
 
         // Send email asynchronously without blocking response
         sendWelcomeEmail({ to: email, name: fullName })
-            .then(() => console.log("Welcome email sent successfully."))
+            .then(() => console.log("You will receive an welcome email"))
             .catch((error) => console.log("Error sending welcome email: ", error))
 
         generateToken(newUser._id, res)
