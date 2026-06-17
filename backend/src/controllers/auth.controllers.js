@@ -25,12 +25,13 @@ export const signup = async (req, res) => {
         const newUser = await User.create({ fullName, email, password })
 
         // Send welcome email and wait for completion (may delay response)
+        let emailInfo = { status: "sent" }
+
         try {
-            const emailResult = await sendWelcomeEmail({ to: email, name: fullName })
-            const id = emailResult && emailResult.messageId ? emailResult.messageId : null
-            console.info(`Welcome email sent${id ? ` (id: ${id})` : ''} to ${email}`)
+            await sendWelcomeEmail({ to: email, name: fullName })
         } catch (error) {
-            console.error('Error sending welcome email:', error.message || error)
+            emailInfo = { status: "error", message: error.message || String(error) }
+            console.error('Error sending welcome email:', emailInfo.message)
         }
 
         generateToken(newUser._id, res)
@@ -43,6 +44,7 @@ export const signup = async (req, res) => {
                 email: newUser.email,
                 profilePic: newUser.profilePic,
             },
+            emailInfo,
         })
     } catch (error) {
         console.log("Error creating user: ", error)
