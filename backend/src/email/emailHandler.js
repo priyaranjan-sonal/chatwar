@@ -1,36 +1,39 @@
-import nodemailer from "nodemailer"
+import Mailjet from "node-mailjet"
 import { createWelcomeEmailTemplate } from "./emailTemplate.js"
 
 export async function sendWelcomeEmail({ to, name }) {
-    const gmailUser = process.env.GMAIL_USER
-    const gmailPass = process.env.GMAIL_PASS
+    const apiKey = process.env.MAILJET_API_KEY
+    const apiSecret = process.env.MAILJET_API_SECRET
 
-    if (!gmailUser || !gmailPass) {
-        throw new Error("GMAIL_USER and GMAIL_PASS are required to send email")
+    if (!apiKey || !apiSecret) {
+        throw new Error("MAILJET_API_KEY and MAILJET_API_SECRET are required to send email")
     }
 
+    const mailjet = Mailjet.connect(apiKey, apiSecret)
     const clientURL = process.env.FRONTEND_URL || "http://localhost:5173"
     const html = createWelcomeEmailTemplate(name, clientURL)
-    const from = process.env.SMTP_FROM || `"ChatWar" <${gmailUser}>`
+    const from = process.env.SMTP_FROM || `"ChatWar" <prsunani674@gmail.com>`
 
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: gmailUser,
-            pass: gmailPass,
-        },
-    })
+    await mailjet
+        .post("send", { version: "v3.1" })
+        .request({
+            Messages: [
+                {
+                    From: {
+                        Email: from.replace(/.*<(.+)>/, "$1"),
+                        Name: from.replace(/"?(.*)"? <.*>/, "$1"),
+                    },
+                    To: [
+                        {
+                            Email: to,
+                            Name: name,
+                        },
+                    ],
+                    Subject: "Welcome to ChatWar",
+                    HTMLPart: html,
+                },
+            ],
+        })
 
-    const info = await transporter.sendMail({
-        from,
-        to,
-        subject: "Welcome to ChatWar",
-        html,
-    })
-
-    return {
-        messageId: info.messageId,
-        accepted: info.accepted,
-        rejected: info.rejected,
-    }
+    return { status: "sent" }
 }

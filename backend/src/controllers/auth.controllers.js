@@ -22,18 +22,10 @@ export const signup = async (req, res) => {
             return res.status(400).json({ message: "Email already exists. Try login" })
         }
 
+        // Send welcome email before creating the account
+        await sendWelcomeEmail({ to: email, name: fullName })
+
         const newUser = await User.create({ fullName, email, password })
-
-        // Send welcome email and wait for completion (may delay response)
-        let emailInfo = { status: "sent" }
-
-        try {
-            await sendWelcomeEmail({ to: email, name: fullName })
-        } catch (error) {
-            emailInfo = { status: "error", message: error.message || String(error) }
-            console.error('Error sending welcome email:', emailInfo.message)
-        }
-
         generateToken(newUser._id, res)
 
         res.status(201).json({
@@ -44,7 +36,7 @@ export const signup = async (req, res) => {
                 email: newUser.email,
                 profilePic: newUser.profilePic,
             },
-            emailInfo,
+            emailInfo: { status: "sent" },
         })
     } catch (error) {
         console.log("Error creating user: ", error)
