@@ -91,7 +91,12 @@ export const updateProfile = async (req, res) => {
 
         const userId = req.user._id
 
-        const uploadResponse = await cloudinary.uploader.upload(profilePic)
+        const uploadResponse = await cloudinary.uploader.upload(profilePic, {
+            folder: "chatwar/profile_pics",
+            public_id: userId.toString(),
+            overwrite: true,
+            invalidate: true,
+        })
         const updatedUser = await User.findByIdAndUpdate(
             userId,
             { profilePic: uploadResponse.secure_url },
@@ -101,10 +106,10 @@ export const updateProfile = async (req, res) => {
         res.status(200).json({
             message: "Profile updated successfully",
             user: {
-                _id: user._id,
-                fullName: user.fullName,
-                email: user.email,
-                profilePic: user.profilePic,
+                _id: updatedUser._id,
+                fullName: updatedUser.fullName,
+                email: updatedUser.email,
+                profilePic: updatedUser.profilePic,
             },
         })
     } catch (error) {
