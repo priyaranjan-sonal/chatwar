@@ -17,11 +17,11 @@ function SignupPage() {
     <div className='relative z-10 w-full flex items-center justify-center px-3 py-4 sm:px-4'>
       <div className='relative w-full max-w-6xl h-auto max-h-[calc(100dvh-2rem)] md:max-h-none md:h-[650px]'>
         <BorderAnimatedContainer>
-          <div className='flex-1 min-h-0 w-full h-auto md:h-full grid md:grid-cols-2 py-4 px-1'>
+          <div className='flex-1 min-h-0 w-full h-auto md:h-full grid md:grid-cols-2 p-2'>
 
             {/* IMAGE  -- LEFT SIDE */}
             <div className='hidden md:flex h-full min-h-0 flex-col items-center justify-center md:border-r md:border-slate-700 p-4 lg:p-6 bg-gradient-to-bl from-slate-800/20 to-transparent'>
-              <div className='flex flex-col items-center justify-center'>
+              <div className='flex flex-col items-center justify-center -translate-y-5'>
                 <img
                   src="/signup.png"
                   alt="People using mobile devices"

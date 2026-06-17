@@ -12,7 +12,7 @@ export async function sendWelcomeEmail({ to, name }) {
     const mailjet = Mailjet.connect(apiKey, apiSecret)
     const clientURL = process.env.FRONTEND_URL || "http://localhost:5173"
     const html = createWelcomeEmailTemplate(name, clientURL)
-    const from = process.env.SMTP_FROM || `"ChatWar" <prsunani674@gmail.com>`
+    const from = process.env.SMTP_FROM || "prsunani674@gmail.com"
 
     await mailjet
         .post("send", { version: "v3.1" })
