@@ -17,15 +17,17 @@ export const signup = async (req, res) => {
             return res.status(400).json({ message: "Password must be at least 8 characters" })
         }
 
-        const existingUser = await User.findOne({ email })
+        const normalizedEmail = email.trim().toLowerCase()
+
+        const existingUser = await User.findOne({ email: normalizedEmail })
         if (existingUser) {
             return res.status(400).json({ message: "Email already exists. Try login" })
         }
 
         // Send welcome email before creating the account
-        await sendWelcomeEmail({ to: email, name: fullName })
+        await sendWelcomeEmail({ to: normalizedEmail, name: fullName })
 
-        const newUser = await User.create({ fullName, email, password })
+        const newUser = await User.create({ fullName, email: normalizedEmail, password })
         generateToken(newUser._id, res)
 
         res.status(201).json({
@@ -40,6 +42,9 @@ export const signup = async (req, res) => {
         })
     } catch (error) {
         console.log("Error creating user: ", error)
+        if (error.code === 11000) {
+            return res.status(400).json({ message: "Email already exists. Try login" })
+        }
         res.status(500).json({ message: error.message })
     }
 }
@@ -52,7 +57,8 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "All fields are required" })
         }
 
-        const user = await User.findOne({ email })
+        const normalizedEmail = email.trim().toLowerCase()
+        const user = await User.findOne({ email: normalizedEmail })
         if (!user) {
             return res.status(400).json({ message: "Invalid email or password" })
         }
@@ -114,6 +120,6 @@ export const updateProfile = async (req, res) => {
         })
     } catch (error) {
         console.log("Error in update profile: ", error)
-        res.status(500).json({ message: "Internal server error" })
+        res.status(500).json({ message: error.message || "Failed to update profile" })
     }
 }

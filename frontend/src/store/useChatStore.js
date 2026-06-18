@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { axiosInstance } from "../library/axios.js";
 import toast from "react-hot-toast";
+import { useAuthStore } from "./useAuthStore.js"
 
 
 export const useChatStore = create((set, get) => ({
@@ -9,8 +10,9 @@ export const useChatStore = create((set, get) => ({
     messages: [],
     activeTab: "chats",
     selectedUser: null,
-    isUserLoading: false,
+    isUsersLoading: false,
     isMessagesLoading: false,
+    isSendingMessage: false,
     isSoundEnabled: JSON.parse(localStorage.getItem("isSoundEnabled")) === true,
 
 
@@ -24,26 +26,73 @@ export const useChatStore = create((set, get) => ({
     setSelectedUser: (selectedUser) => set({ selectedUser }),
 
     getAllContacts: async () => {
-        set({ isUserLoading: true })
+        set({ isUsersLoading: true })
         try {
             const res = await axiosInstance.get("/api/messages/contacts")
             set({ allContacts: res.data })
         } catch (error) {
             toast.error(error.response.data.message)
         } finally {
-            set({ isUserLoading: false })
+            set({ isUsersLoading: false })
         }
     },
 
-    getMyChatPartners: async() => {
-        set({ isUserLoading: true })
+    getMyChatPartners: async () => {
+        set({ isUsersLoading: true })
         try {
             const res = await axiosInstance.get("/api/messages/chats")
             set({ chats: res.data })
         } catch (error) {
             toast.error(error.response.data.message)
         } finally {
-            set({ isUserLoading: false })
+            set({ isUsersLoading: false })
+        }
+    },
+
+    getMessagesByUserId: async (userId) => {
+        set({isMessagesLoading: true})
+        try {
+            const res = await axiosInstance.get(`/api/messages/${userId}`)
+            set({messages: res.data})
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Something went wrong while loading messages")
+            console.log("Get messages error: ", error)
+        } finally {
+            set({isMessagesLoading: false})
+        }
+    },
+
+    sendMessage: async (messageData) => {
+        const { selectedUser, messages } = get()
+        if (!selectedUser) return false
+
+        set({ isSendingMessage: true })
+
+        const { authUser } = useAuthStore.getState()
+        const tempId = `temp-${Date.now()}`
+
+        const optimisticMessage = {
+            _id: tempId,
+            senderId: authUser._id,
+            receiverId: selectedUser._id,
+            text: messageData.text,
+            image: messageData.image,
+            createdAt: new Date().toISOString(),
+            isOptimistic: true
+        }
+        set({messages: [...messages, optimisticMessage]})
+        try {
+            const res = await axiosInstance.post(`/api/messages/send/${selectedUser._id}`, messageData)
+            set({ messages: [...messages, res.data] })
+            return true
+        } catch (error) {
+            set({messages: messages})
+            toast.error(error.response?.data?.message || "Something went wrong while sending your message")
+            return false
+        } finally {
+            set({ isSendingMessage: false })
         }
     }
+
+
 }))

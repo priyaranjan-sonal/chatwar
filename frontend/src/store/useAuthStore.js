@@ -86,3 +86,18 @@ export const useAuthStore = create((set) => ({
         }
     }
 }))
+
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            const { authUser } = useAuthStore.getState()
+            if (authUser) {
+                useAuthStore.setState({ authUser: null })
+                toast.error("Your session has ended. Please log in again.")
+                axiosInstance.post("/api/auth/logout").catch(() => {})
+            }
+        }
+        return Promise.reject(error)
+    }
+)
