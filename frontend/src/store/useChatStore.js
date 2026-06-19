@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../library/axios.js";
 import toast from "react-hot-toast";
 import { useAuthStore } from "./useAuthStore.js"
-
+import { playMessageNotification } from "../library/notificationSound.js"
 
 export const useChatStore = create((set, get) => ({
     allContacts: [],
@@ -80,19 +80,45 @@ export const useChatStore = create((set, get) => ({
             createdAt: new Date().toISOString(),
             isOptimistic: true
         }
-        set({messages: [...messages, optimisticMessage]})
+        set({ messages: [...messages, optimisticMessage] })
         try {
             const res = await axiosInstance.post(`/api/messages/send/${selectedUser._id}`, messageData)
-            set({ messages: [...messages, res.data] })
+            set({
+                messages: get().messages
+                    .filter((msg) => msg._id !== tempId)
+                    .concat(res.data),
+            })
             return true
         } catch (error) {
-            set({messages: messages})
+            set({ messages: get().messages.filter((msg) => msg._id !== tempId) })
             toast.error(error.response?.data?.message || "Something went wrong while sending your message")
             return false
         } finally {
             set({ isSendingMessage: false })
         }
-    }
+    },
 
+    addIncomingMessage: (message) => {
+        const { selectedUser, messages, isSoundEnabled } = get()
+        const { authUser } = useAuthStore.getState()
+        if (!authUser) return
+
+        playMessageNotification(message, authUser, isSoundEnabled)
+
+        if (!selectedUser) return
+
+        const partnerId = selectedUser._id.toString()
+        const myId = authUser._id.toString()
+        const senderId = message.senderId.toString()
+        const receiverId = message.receiverId.toString()
+
+        const isForActiveChat =
+            (senderId === partnerId && receiverId === myId) ||
+            (senderId === myId && receiverId === partnerId)
+
+        if (!isForActiveChat || messages.some((m) => m._id === message._id)) return
+
+        set({ messages: [...messages, message] })
+    },
 
 }))

@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useChatStore } from "../store/useChatStore";
+import { useAuthStore } from "../store/useAuthStore.js";
 
 import BorderUnanimatedContainer from "../components/BorderUnanimatedContainer";
 import ProfileHeader from "../components/ProfileHeader";
@@ -11,6 +12,18 @@ import NoConversationPlaceholder from "../components/NoConversationPlaceholder";
 
 function ChatPage() {
   const { activeTab, selectedUser } = useChatStore();
+  const socket = useAuthStore((state) => state.socket);
+
+  useEffect(() => {
+    if (!socket) return
+
+    const handleNewMessage = (message) => {
+      useChatStore.getState().addIncomingMessage(message)
+    }
+
+    socket.on("newMessage", handleNewMessage)
+    return () => socket.off("newMessage", handleNewMessage)
+  }, [socket])
 
   return (
     <div className="relative w-full max-w-6xl h-auto max-h-[calc(100dvh-2rem)] md:max-h-none md:h-[650px]">

@@ -6,8 +6,9 @@ import cookieParser from "cookie-parser"
 import authRoutes from "./routes/auth.routes.js"
 import messageRoutes from "./routes/message.routes.js"
 import connectDB from "./library/db.js"
+import { app, server } from "./library/socket.js"
 
-const app = express()
+
 
 const PORT = process.env.PORT || 8001
 const FRONTEND_URL = process.env.FRONTEND_URL
@@ -36,7 +37,7 @@ app.use((err, req, res, next) => {
 
 const startServer = async () => {
     await connectDB()
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
         console.log(`Server running: http://localhost:${PORT}`)
     })
 }
