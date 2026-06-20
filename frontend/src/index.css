@@ -2,19 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+#root {
+    @apply h-full w-full overflow-hidden;
+}
 
-@property --border-angle {
-    inherits: false;
-    initial-value: 0deg;
-    syntax: '<angle>';
+html {
+    color-scheme: dark;
 }
 
 .input {
-    @apply w-full bg-slate-800/50 border border-slate-700 rounded-lg py-4 pl-10 pr-4 text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-transparent;
+    @apply relative z-0 w-full bg-slate-800/50 border border-slate-700 rounded-lg py-3.5 sm:py-4 pl-10 pr-4 text-base sm:text-sm text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-transparent;
+}
+
+input:not([type="file"]):not([type="hidden"]):-webkit-autofill,
+input:not([type="file"]):not([type="hidden"]):-webkit-autofill:hover,
+input:not([type="file"]):not([type="hidden"]):-webkit-autofill:focus,
+input:not([type="file"]):not([type="hidden"]):-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px rgb(30 41 59) inset !important;
+    box-shadow: 0 0 0 1000px rgb(30 41 59) inset !important;
+    -webkit-text-fill-color: rgb(226 232 240) !important;
+    caret-color: rgb(226 232 240);
+    border-color: rgb(51 65 85) !important;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+input:not([type="file"]):not([type="hidden"]):autofill,
+input:not([type="file"]):not([type="hidden"]):-moz-autofill {
+    box-shadow: 0 0 0 1000px rgb(30 41 59) inset !important;
+    -webkit-text-fill-color: rgb(226 232 240) !important;
+    caret-color: rgb(226 232 240);
+    border-color: rgb(51 65 85) !important;
 }
 
 .auth-input-icon {
-    @apply absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 size-5;
+    @apply pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2 text-slate-400 size-5;
 }
 
 .auth-input-label {
@@ -26,9 +49,49 @@
 }
 
 .auth-btn {
-    @apply w-full bg-cyan-500 text-white rounded-lg py-2.5 font-medium hover:bg-cyan-600 focus:ring-2 focus:ring-cyan-500;
+    @apply w-full bg-cyan-500 text-white rounded-lg py-3 sm:py-2.5 text-base sm:text-sm font-medium hover:bg-cyan-600 focus:ring-2 focus:ring-cyan-500;
 }
 
 .auth-link {
     @apply px-4 py-2 inline-block bg-cyan-500/10 rounded-lg text-cyan-400 hover:text-cyan-500 text-sm transition-colors hover:underline;
+}
+
+@layer components {
+    .chat-bubble {
+        @apply relative px-3 py-2;
+    }
+
+    .chat-bubble-sent {
+        @apply rounded-2xl rounded-br-sm bg-cyan-600 text-white;
+    }
+
+    .chat-bubble-sent::after {
+        content: "";
+        position: absolute;
+        right: -5px;
+        bottom: 0;
+        width: 10px;
+        height: 10px;
+        background-color: rgb(8 145 178);
+        clip-path: polygon(0 0, 0 100%, 100% 100%);
+    }
+
+    .chat-bubble-received {
+        @apply rounded-2xl rounded-bl-sm bg-slate-800 text-slate-200;
+    }
+
+    .chat-bubble-received::after {
+        content: "";
+        position: absolute;
+        left: -5px;
+        bottom: 0;
+        width: 10px;
+        height: 10px;
+        background-color: rgb(30 41 59);
+        clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    }
+
+    .panel-header {
+        @apply flex shrink-0 items-center justify-between border-b border-slate-700/50 bg-slate-800/50 px-4 py-2.5 sm:px-6;
+    }
 }
