@@ -1,12 +1,19 @@
 import { useRef } from "react";
-import { LogOutIcon, VolumeOffIcon, Volume2Icon, LoaderIcon } from "lucide-react";
+import {
+  LoaderIcon,
+  SettingsIcon,
+  XIcon,
+} from "lucide-react";
 import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
-
 function ProfileHeader() {
-  const { logout, authUser, updateProfile, isUpdatingProfile } = useAuthStore();
-  const { isSoundEnabled, toggleSound } = useChatStore();
+  const { authUser, updateProfile, isUpdatingProfile } = useAuthStore();
+  const { setSelectedUser } = useChatStore();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isSettings = location.pathname === "/settings";
 
   const fileInputRef = useRef(null);
   const lastUploadedFileRef = useRef(null);
@@ -39,19 +46,30 @@ function ProfileHeader() {
     };
   };
 
+  const openProfilePicker = () => {
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    fileInputRef.current?.click();
+  };
+
+  const handleSettingsToggle = () => {
+    if (isSettings) {
+      setSelectedUser(null);
+      navigate("/", { replace: true });
+      return;
+    }
+
+    setSelectedUser(null);
+    navigate("/settings");
+  };
+
   return (
-    <div className="p-6 border-b border-slate-700/50">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          {/* AVATAR */}
-          <div className={`avatar ${isUpdatingProfile ? "" : "avatar-online"}`}>
+    <div className="panel-header">
+      <div className="flex min-w-0 items-center gap-2.5">
+          <div className={`avatar size-10 ${isUpdatingProfile ? "" : "avatar-online"}`}>
             <button
               type="button"
-              className="size-14 rounded-full overflow-hidden relative group disabled:cursor-not-allowed"
-              onClick={() => {
-                if (fileInputRef.current) fileInputRef.current.value = "";
-                fileInputRef.current?.click();
-              }}
+              className="relative size-10 overflow-hidden rounded-full group disabled:cursor-not-allowed"
+              onClick={openProfilePicker}
               disabled={isUpdatingProfile}
             >
               <img
@@ -64,8 +82,8 @@ function ProfileHeader() {
                   <LoaderIcon className="size-5 animate-spin text-cyan-400" />
                 </div>
               ) : (
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                  <span className="text-white text-xs">Change</span>
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
+                  <span className="text-xs text-white">Change</span>
                 </div>
               )}
             </button>
@@ -80,40 +98,32 @@ function ProfileHeader() {
             />
           </div>
 
-          {/* USERNAME & ONLINE TEXT */}
           <div>
-            <h3 className="text-slate-200 font-medium text-base max-w-[180px] truncate">
+            <h3 className="max-w-[180px] truncate text-sm font-medium text-slate-200">
               {authUser.fullName}
             </h3>
-
-            <p className="text-slate-400 text-xs">Online</p>
+            <p className="text-xs text-slate-400">Online</p>
           </div>
         </div>
 
-        {/* BUTTONS */}
-        <div className="flex gap-4 items-center">
-          {/* LOGOUT BTN */}
-          <button
-            className="text-slate-400 hover:text-slate-200 transition-colors"
-            onClick={logout}
-          >
-            <LogOutIcon className="size-5" />
-          </button>
-
-          {/* SOUND TOGGLE BTN */}
-          <button
-            className="text-slate-400 hover:text-slate-200 transition-colors"
-            onClick={toggleSound}
-          >
-            {isSoundEnabled ? (
-              <Volume2Icon className="size-5" />
-            ) : (
-              <VolumeOffIcon className="size-5" />
-            )}
-          </button>
-        </div>
-      </div>
+        <button
+          type="button"
+          className={`shrink-0 rounded-lg p-1.5 transition-colors hover:bg-slate-700/50 ${
+            isSettings
+              ? "bg-slate-700/40 text-cyan-400"
+              : "text-slate-400 hover:text-slate-200"
+          }`}
+          onClick={handleSettingsToggle}
+          aria-label={isSettings ? "Close settings" : "Open settings"}
+        >
+          {isSettings ? (
+            <XIcon className="size-5" />
+          ) : (
+            <SettingsIcon className="size-5" />
+          )}
+        </button>
     </div>
   );
 }
+
 export default ProfileHeader;

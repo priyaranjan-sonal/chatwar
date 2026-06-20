@@ -14,11 +14,17 @@ export const useChatStore = create((set, get) => ({
     isMessagesLoading: false,
     isSendingMessage: false,
     isSoundEnabled: JSON.parse(localStorage.getItem("isSoundEnabled")) === true,
+    theme: localStorage.getItem("chatwar-theme") || "dark",
 
 
     toggleSound: () => {
         localStorage.setItem("isSoundEnabled", !get().isSoundEnabled)
         set({isSoundEnabled: !get().isSoundEnabled})
+    },
+
+    setTheme: (theme) => {
+        localStorage.setItem("chatwar-theme", theme)
+        set({ theme })
     },
 
     setActiveTab: (tab) => set({activeTab: tab}),
