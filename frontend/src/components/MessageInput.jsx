@@ -47,7 +47,7 @@ function MessageInput() {
   }
 
   return (
-    <div className="p-3 border-t border-slate-700/50">
+    <div className="shrink-0 border-t border-slate-700/50 p-3 sm:p-4 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
       {imagePreview && (
         <div className="mb-3 flex items-center">
           <div className="relative">
