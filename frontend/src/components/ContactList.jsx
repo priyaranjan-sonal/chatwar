@@ -17,15 +17,15 @@ function ContactList() {
   if (isUsersLoading) return <UsersLoadingSkeleton />
 
   return (
-    <div className="-mx-4 lg:mx-0 lg:space-y-1">
+    <div className="-mx-4 md:mx-0 md:space-y-1">
       {allContacts.map((contact) => {
         const isSelected = selectedUser && String(selectedUser._id) === String(contact._id)
 
         return (
         <div
           key={contact._id}
-          className={`w-full px-4 py-2.5 cursor-pointer transition-colors border-b border-slate-700/30 lg:rounded-lg lg:border-b-0 hover:bg-cyan-500/10 ${
-            isSelected ? "bg-cyan-500/10" : "bg-transparent"
+          className={`w-full px-4 py-2.5 cursor-pointer transition-colors border-b border-prsSlate/50 md:rounded-lg md:border-b-0 ${
+            isSelected ? "bg-prsBlue/20" : "hover:bg-prsBlue/10"
           }`}
           onClick={() => openChat(contact)}
         >
@@ -39,7 +39,7 @@ function ContactList() {
                 />
               </div>
             </div>
-            <h4 className="text-slate-200 font-medium truncate">{contact.fullName}</h4>
+            <h4 className="text-prsSnow font-medium truncate">{contact.fullName}</h4>
           </div>
         </div>
         )

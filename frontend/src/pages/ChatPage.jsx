@@ -4,7 +4,7 @@ import { useChatStore } from "../store/useChatStore";
 import { useAuthStore } from "../store/useAuthStore.js";
 import { ChatNavigationProvider } from "../context/ChatNavigationContext.jsx";
 
-import ProfileHeader from "../components/ProfileHeader";
+import Header from "../components/Header";
 import ActiveTabSwitch from "../components/ActiveTabSwitch";
 import ChatsList from "../components/ChatsList";
 import ContactList from "../components/ContactList";
@@ -12,6 +12,7 @@ import ChatContainer from "../components/ChatContainer";
 import NoConversationPlaceholder from "../components/NoConversationPlaceholder";
 import SettingsSidebar from "../components/SettingsSidebar";
 import SettingsPanel from "../components/SettingsPanel";
+import ProfilePanel from "../components/ProfilePanel";
 import NoSettingsOpenPlaceholder from "../components/NoSettingsOpenPlaceholder";
 
 function ChatPage() {
@@ -46,11 +47,15 @@ function ChatPage() {
   const showChatOnMobile = selectedUser && !isSettings;
   const showSettingsOnMobile = isSettings;
   const showSettingsPanelOnMobile =
-    isSettings && activeSettingsSection === "general";
+    isSettings && (activeSettingsSection === "general" || activeSettingsSection === "profile");
 
   const renderSettingsPanel = () => {
     if (activeSettingsSection === "general") {
       return <SettingsPanel onClose={closeSettingsSection} />;
+    }
+
+    if (activeSettingsSection === "profile") {
+      return <ProfilePanel onClose={closeSettingsSection} />;
     }
 
     return <NoSettingsOpenPlaceholder />;
@@ -59,17 +64,17 @@ function ChatPage() {
   return (
     <ChatNavigationProvider>
       <div className="relative h-full w-full">
-        <div className="flex h-full min-h-0 w-full flex-col overflow-hidden bg-gradient-to-br from-[#172033] via-slate-800 to-[#172033] lg:flex-row">
+        <div className="flex h-full min-h-0 w-full flex-col overflow-hidden app-gradient-bg md:flex-row">
           {/* LEFT SIDE */}
           <div
-            className={`min-h-0 w-full flex-col bg-slate-800/50 backdrop-blur-sm lg:flex lg:w-[22rem] lg:flex-none lg:shrink-0 ${
+            className={`min-h-0 w-full flex-col panel-surface md:flex md:w-72 md:flex-none md:shrink-0 lg:w-[22rem] ${
               showListOnMobile ||
               (showSettingsOnMobile && !showSettingsPanelOnMobile)
                 ? "flex flex-1"
-                : "hidden lg:flex"
+                : "hidden md:flex"
             }`}
           >
-            <ProfileHeader />
+            <Header />
 
             {isSettings ? (
               <SettingsSidebar
@@ -88,10 +93,10 @@ function ChatPage() {
 
           {/* RIGHT SIDE */}
           <div
-            className={`min-h-0 w-full min-w-0 flex-col bg-slate-900/50 backdrop-blur-sm lg:flex lg:flex-1 ${
+            className={`min-h-0 w-full min-w-0 flex-col panel-main md:flex md:flex-1 ${
               showChatOnMobile || showSettingsPanelOnMobile
                 ? "flex flex-1"
-                : "hidden lg:flex"
+                : "hidden md:flex"
             }`}
           >
             {selectedUser && !isSettings ? (

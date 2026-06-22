@@ -47,18 +47,18 @@ function MessageInput() {
   }
 
   return (
-    <div className="shrink-0 border-t border-slate-700/50 p-3 sm:p-4 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+    <div className="shrink-0 border-t border-prsSlate/80 p-3 sm:p-4 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
       {imagePreview && (
         <div className="mb-3 flex items-center">
           <div className="relative">
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-slate-700"
+              className="w-20 h-20 object-cover rounded-lg border border-prsSlate"
             />
             <button
               onClick={removeImage}
-              className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-slate-200 hover:bg-slate-700"
+              className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-prsCharcoal flex items-center justify-center text-prsSnow hover:bg-prsGraphite"
               type="button"
             >
               <Trash2 className="w-4 h-4" />
@@ -85,8 +85,8 @@ function MessageInput() {
             if (fileInputRef.current) fileInputRef.current.value = ""
             fileInputRef.current?.click()
           }}
-          className={`flex items-center justify-center h-11 w-11 shrink-0 bg-slate-800/50 border border-slate-700/50 text-slate-400 hover:text-slate-200 rounded-lg transition-colors ${
-            imagePreview ? "text-cyan-500 border-cyan-500/50" : ""
+          className={`flex items-center justify-center h-11 w-11 shrink-0 panel-surface border border-prsSlate/80 text-prsSilver hover:text-prsSnow rounded-lg transition-colors ${
+            imagePreview ? "text-prsBlue border-prsBlue/50" : ""
           }`}
         >
           <ImageIcon className="size-6 p-0.5" />
@@ -97,13 +97,13 @@ function MessageInput() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Type your message..."
-          className="flex-1 min-w-0 h-11 bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/50"
+          className="flex-1 min-w-0 h-11 panel-surface border border-prsSlate/80 rounded-xl px-4 text-prsSnow placeholder:text-prsSilver focus:outline-none focus:border-prsBlue/50"
         />
 
         <button
           type="submit"
           disabled={(!text.trim() && !imagePreview) || isSendingMessage}
-          className="flex items-center justify-center h-11 w-11 shrink-0 bg-gradient-to-r from-cyan-500 to-cyan-600 text-white rounded-lg hover:from-cyan-600 hover:to-cyan-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center h-11 w-11 shrink-0 bg-gradient-to-r from-prsBlue to-prsNavy text-prsWhite rounded-lg hover:from-prsNavy hover:to-prsNavy transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSendingMessage ? (
             <LoaderIcon className="size-6 animate-spin" />

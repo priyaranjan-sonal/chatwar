@@ -5,7 +5,7 @@
 html,
 body,
 #root {
-    @apply h-full w-full overflow-hidden;
+    @apply h-full w-full overflow-hidden bg-prsBlack text-prsSnow;
 }
 
 html {
@@ -13,47 +13,144 @@ html {
 }
 
 .input {
-    @apply relative z-0 w-full bg-slate-800/50 border border-slate-700 rounded-lg py-3.5 sm:py-4 pl-10 pr-4 text-base sm:text-sm text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-transparent;
+    @apply relative z-0 w-full rounded-lg border border-prsSlate bg-prsCharcoal/80 py-2.5 pl-9 pr-3 text-sm text-prsSnow placeholder-prsSilver focus:border-transparent focus:outline-none focus:ring-1 focus:ring-prsBlue sm:py-3 sm:pl-10 sm:pr-4;
 }
 
 input:not([type="file"]):not([type="hidden"]):-webkit-autofill,
 input:not([type="file"]):not([type="hidden"]):-webkit-autofill:hover,
 input:not([type="file"]):not([type="hidden"]):-webkit-autofill:focus,
 input:not([type="file"]):not([type="hidden"]):-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px rgb(30 41 59) inset !important;
-    box-shadow: 0 0 0 1000px rgb(30 41 59) inset !important;
-    -webkit-text-fill-color: rgb(226 232 240) !important;
-    caret-color: rgb(226 232 240);
-    border-color: rgb(51 65 85) !important;
+    -webkit-box-shadow: 0 0 0 1000px rgb(20 26 33) inset !important;
+    box-shadow: 0 0 0 1000px rgb(20 26 33) inset !important;
+    -webkit-text-fill-color: rgb(230 237 243) !important;
+    caret-color: rgb(230 237 243);
+    border-color: rgb(37 43 51) !important;
     transition: background-color 9999s ease-in-out 0s;
 }
 
 input:not([type="file"]):not([type="hidden"]):autofill,
 input:not([type="file"]):not([type="hidden"]):-moz-autofill {
-    box-shadow: 0 0 0 1000px rgb(30 41 59) inset !important;
-    -webkit-text-fill-color: rgb(226 232 240) !important;
-    caret-color: rgb(226 232 240);
-    border-color: rgb(51 65 85) !important;
+    box-shadow: 0 0 0 1000px rgb(20 26 33) inset !important;
+    -webkit-text-fill-color: rgb(230 237 243) !important;
+    caret-color: rgb(230 237 243);
+    border-color: rgb(37 43 51) !important;
 }
 
 .auth-input-icon {
-    @apply pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2 text-slate-400 size-5;
+    @apply pointer-events-none absolute left-2.5 top-1/2 z-10 size-4 -translate-y-1/2 text-prsSilver sm:left-3 sm:size-5;
 }
 
 .auth-input-label {
-    @apply block text-sm font-medium text-slate-300 mb-2;
+    @apply mb-1.5 block text-xs font-medium text-prsGray;
 }
 
 .auth-badge {
-    @apply inline-flex items-center px-3 py-1 text-sm font-medium rounded-full bg-cyan-500/20 text-cyan-300;
+    @apply inline-flex items-center rounded-full bg-prsBlue px-2.5 py-0.5 text-xs font-medium text-prsWhite;
+}
+
+.auth-hero-panel {
+    @apply hidden h-full min-h-0 flex-col items-center justify-center bg-gradient-to-bl from-prsCharcoal/50 to-transparent p-4 md:flex md:border-r md:border-prsSlate lg:p-8;
+}
+
+.auth-hero-inner {
+    @apply flex w-full max-w-2xl -translate-y-5 flex-col items-center px-2 lg:-translate-y-7 lg:px-4;
+}
+
+.auth-hero-image {
+    @apply w-full max-w-[360px] object-contain lg:max-w-[420px] xl:max-w-[480px];
+}
+
+.auth-hero-copy {
+    @apply mt-5 w-full text-center lg:mt-6;
+}
+
+.auth-hero-title {
+    @apply text-[18px] font-medium leading-snug text-prsSky lg:text-[22px];
+}
+
+.auth-hero-accent {
+    @apply text-prsYellow;
+}
+
+.auth-hero-badges {
+    @apply mx-auto mt-4 flex w-full flex-wrap items-center justify-center gap-3 lg:mt-5 lg:gap-4;
+}
+
+.auth-hero-badges .auth-badge {
+    @apply px-4 py-1.5 text-sm font-semibold lg:px-5 lg:py-2 lg:text-[15px];
 }
 
 .auth-btn {
-    @apply w-full bg-cyan-500 text-white rounded-lg py-3 sm:py-2.5 text-base sm:text-sm font-medium hover:bg-cyan-600 focus:ring-2 focus:ring-cyan-500;
+    @apply w-full rounded-lg bg-prsBlue py-2.5 text-sm font-medium text-prsWhite hover:bg-prsNavy focus:ring-2 focus:ring-prsBlue;
 }
 
 .auth-link {
-    @apply px-4 py-2 inline-block bg-cyan-500/10 rounded-lg text-cyan-400 hover:text-cyan-500 text-sm transition-colors hover:underline;
+    @apply inline-block rounded-lg bg-prsBlue/10 px-4 py-2 text-sm text-prsSky transition-colors hover:text-prsBlue hover:underline;
+}
+
+.auth-validation-guide {
+    @apply mb-4 rounded-lg border border-prsSlate/80 bg-prsCharcoal/70 px-2.5 py-2 sm:mb-5;
+}
+
+.auth-page-header {
+    @apply mb-4 text-center sm:mb-5;
+}
+
+.auth-brand {
+    @apply mb-5 text-[34px] font-bold tracking-tight sm:mb-6 sm:text-[38px];
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.auth-page-title-row {
+    @apply flex items-center justify-center gap-2.5;
+}
+
+.auth-form {
+    @apply space-y-3.5 sm:space-y-4;
+}
+
+.auth-submit {
+    @apply pt-2.5 sm:pt-3;
+}
+
+.auth-footer {
+    @apply mt-4 text-center text-xs text-prsGray sm:mt-5 sm:text-sm;
+}
+
+.auth-form-panel {
+    @apply flex h-full min-h-0 w-full items-center justify-center overflow-hidden px-4 py-3 sm:px-6 sm:py-4 md:px-8;
+}
+
+.auth-form-inner {
+    @apply mx-auto w-full max-w-[320px] sm:max-w-[360px] md:max-w-md;
+}
+
+.auth-field-error {
+    @apply mt-1 text-[11px] leading-snug text-prsRose;
+}
+
+.auth-password-input {
+    @apply pr-10 sm:pr-11;
+}
+
+.auth-password-toggle {
+    @apply absolute right-2.5 top-1/2 z-10 -translate-y-1/2 rounded-md p-1 text-prsSilver transition-colors hover:bg-prsGraphite/80 hover:text-prsSnow sm:right-3;
+}
+
+.app-shell-bg {
+    @apply bg-prsBlack;
+}
+
+.app-gradient-bg {
+    @apply bg-gradient-to-br from-prsBlack via-prsCharcoal to-prsBlack;
+}
+
+.panel-surface {
+    @apply bg-prsCharcoal/80 backdrop-blur-sm;
+}
+
+.panel-main {
+    @apply bg-prsBlack/80 backdrop-blur-sm;
 }
 
 @layer components {
@@ -62,7 +159,7 @@ input:not([type="file"]):not([type="hidden"]):-moz-autofill {
     }
 
     .chat-bubble-sent {
-        @apply rounded-2xl rounded-br-sm bg-cyan-600 text-white;
+        @apply rounded-2xl rounded-br-sm bg-prsBlue text-prsWhite;
     }
 
     .chat-bubble-sent::after {
@@ -72,12 +169,12 @@ input:not([type="file"]):not([type="hidden"]):-moz-autofill {
         bottom: 0;
         width: 10px;
         height: 10px;
-        background-color: rgb(8 145 178);
+        background-color: #0064E0;
         clip-path: polygon(0 0, 0 100%, 100% 100%);
     }
 
     .chat-bubble-received {
-        @apply rounded-2xl rounded-bl-sm bg-slate-800 text-slate-200;
+        @apply rounded-2xl rounded-bl-sm bg-prsCharcoal text-prsSnow;
     }
 
     .chat-bubble-received::after {
@@ -87,11 +184,11 @@ input:not([type="file"]):not([type="hidden"]):-moz-autofill {
         bottom: 0;
         width: 10px;
         height: 10px;
-        background-color: rgb(30 41 59);
+        background-color: #141A21;
         clip-path: polygon(100% 0, 100% 100%, 0 100%);
     }
 
     .panel-header {
-        @apply flex shrink-0 items-center justify-between border-b border-slate-700/50 bg-slate-800/50 px-4 py-2.5 sm:px-6;
+        @apply flex h-[3.75rem] shrink-0 items-center justify-between border-b border-prsSlate/80 bg-prsCharcoal/80 px-4 sm:px-6;
     }
 }

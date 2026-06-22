@@ -1,29 +1,54 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import {
+  USERNAME_REGEX,
+  AUTH_GUIDE,
+  guideError,
+  getSignupPasswordError,
+} from "../library/auth.validation.js";
 
 const userSchema = new mongoose.Schema(
-    {
-        email:{
-            type: String,
-            required: true,
-            unique: true,
-            lowercase: true,
-            trim: true,
+  {
+    username: {
+      type: String,
+      required: [true, guideError(AUTH_GUIDE.username)],
+      unique: true,
+      lowercase: true,
+      trim: true,
+      minlength: [3, guideError(AUTH_GUIDE.username)],
+      maxlength: [20, guideError(AUTH_GUIDE.username)],
+      match: [USERNAME_REGEX, guideError(AUTH_GUIDE.username)],
+      index: true,
+    },
+    fullName: {
+      type: String,
+      required: [true, "Full name is required"],
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: [true, guideError(AUTH_GUIDE.password)],
+      select: false,
+      validate: {
+        validator(value) {
+          return !getSignupPasswordError(value)
         },
-        fullName:{
-            type: String,
-            required: true
+        message: (props) => getSignupPasswordError(props.value) || "Invalid password",
+      },
+    },
+    profilePic: {
+      type: String,
+      default: "",
+      maxlength: [2048, "Profile picture URL is too long"],
+      validate: {
+        validator(value) {
+          if (!value) return true
+          return /^https?:\/\/.+/i.test(value)
         },
-        password:{
-            type: String,
-            required: true,
-            minlength: 8
-        },
-        profilePic:{
-            type: String,
-            default: ""
-        }
-    }, {timestamps: true}
+        message: "Profile picture must be a valid URL",
+      },
+    },
+  },  { timestamps: true }
 )
 
 userSchema.pre("save", async function () {

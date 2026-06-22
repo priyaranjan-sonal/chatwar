@@ -19,15 +19,15 @@ function ChatsList() {
   if (chats.length === 0) return <NoChatsFound />
 
   return (
-    <div className="-mx-4 lg:mx-0 lg:space-y-1">
+    <div className="-mx-4 md:mx-0 md:space-y-1">
       {chats.map((chat) => {
         const isSelected = selectedUser && String(selectedUser._id) === String(chat._id)
 
         return (
         <div
           key={chat._id}
-          className={`w-full px-4 py-2.5 cursor-pointer transition-colors border-b border-slate-700/30 lg:rounded-lg lg:border-b-0 hover:bg-cyan-500/10 ${
-            isSelected ? "bg-cyan-500/10" : "bg-transparent"
+          className={`w-full px-4 py-2.5 cursor-pointer transition-colors border-b border-prsSlate/50 md:rounded-lg md:border-b-0 ${
+            isSelected ? "bg-prsBlue/20" : "hover:bg-prsBlue/10"
           }`}
           onClick={() => openChat(chat)}
         >
@@ -41,7 +41,7 @@ function ChatsList() {
                 />
               </div>
             </div>
-            <h4 className="text-slate-200 font-medium truncate">{chat.fullName}</h4>
+            <h4 className="text-prsSnow font-medium truncate">{chat.fullName}</h4>
           </div>
         </div>
         )

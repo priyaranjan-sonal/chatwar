@@ -26,13 +26,18 @@ function ChatHeader() {
         </div>
 
         <div className="min-w-0">
-          <h3 className='text-slate-200 font-medium text-sm truncate'>{selectedUser?.fullName}</h3>
-          <p className='text-slate-400 text-xs'>{isOnline ? "Online" : "Offline"}</p>
+          <h3 className='text-prsSnow font-medium text-sm truncate'>{selectedUser?.fullName}</h3>
+          <p className='text-prsSilver text-xs'>{isOnline ? "Online" : "Offline"}</p>
         </div>
       </div>
 
-      <button type="button" onClick={closeChat} className='shrink-0 p-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-colors rounded-lg'>
-        <XIcon className='size-5 transition-colors cursor-pointer'/>
+      <button
+        type="button"
+        onClick={closeChat}
+        className='flex size-10 shrink-0 items-center justify-center rounded-full text-prsSilver transition-colors hover:bg-prsGraphite/80 hover:text-prsSnow md:hidden'
+        aria-label="Back to chats"
+      >
+        <XIcon className='size-5'/>
       </button>
     </div>
   )

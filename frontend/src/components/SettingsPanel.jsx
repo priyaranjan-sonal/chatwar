@@ -17,39 +17,39 @@ function SettingsPanel({ onClose }) {
     <div className="flex h-full min-h-0 flex-1 flex-col">
       <div className="panel-header">
         <div className="flex min-w-0 items-center gap-2.5">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-slate-700/50">
-            <SlidersHorizontalIcon className="size-5 text-cyan-400" />
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-prsGraphite/80">
+            <SlidersHorizontalIcon className="size-5 text-prsSky" />
           </div>
           <div className="min-w-0">
-            <h3 className="truncate text-sm font-medium text-slate-200">General</h3>
-            <p className="text-xs text-slate-400">App preferences</p>
+            <h3 className="truncate text-sm font-medium text-prsSnow">General</h3>
+            <p className="text-xs text-prsSilver">Notification and Theme</p>
           </div>
         </div>
         <button
           type="button"
           onClick={onClose}
-          className="shrink-0 rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-700/50 hover:text-slate-200"
+          className="flex size-10 shrink-0 items-center justify-center rounded-full text-prsSilver transition-colors hover:bg-prsGraphite/80 hover:text-prsSnow"
           aria-label="Close section"
         >
-          <XIcon className="size-5 cursor-pointer transition-colors" />
+          <XIcon className="size-5" />
         </button>
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
         <div className="mx-auto w-full max-w-xl space-y-8">
           <section>
-            <h3 className="mb-3 text-xs font-medium uppercase tracking-wide text-slate-400">
+            <h3 className="mb-3 text-xs font-medium uppercase tracking-wide text-prsSilver">
               Notifications
             </h3>
-            <div className="rounded-xl border border-slate-700/50 bg-slate-800/40 p-4">
+            <div className="rounded-xl border border-prsSlate/80 bg-prsCharcoal/70 p-4">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex min-w-0 items-center gap-3">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-cyan-500/10">
-                    <BellIcon className="size-5 text-cyan-400" />
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-prsBlue/10">
+                    <BellIcon className="size-5 text-prsSky" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-slate-200">Message sounds</p>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-sm font-medium text-prsSnow">Message sounds</p>
+                    <p className="text-xs text-prsSilver">
                       Play a sound for new incoming messages
                     </p>
                   </div>
@@ -59,14 +59,12 @@ function SettingsPanel({ onClose }) {
                   role="switch"
                   aria-checked={isSoundEnabled}
                   onClick={toggleSound}
-                  className={`relative h-7 w-12 shrink-0 rounded-full transition-colors ${
-                    isSoundEnabled ? "bg-cyan-500" : "bg-slate-600"
-                  }`}
+                  className={`relative h-7 w-12 shrink-0 rounded-full transition-colors ${isSoundEnabled ? "bg-prsBlue" : "bg-prsSlate"
+                    }`}
                 >
                   <span
-                    className={`absolute top-0.5 size-6 rounded-full bg-white shadow transition-transform ${
-                      isSoundEnabled ? "left-[22px]" : "left-0.5"
-                    }`}
+                    className={`absolute top-0.5 size-6 rounded-full bg-prsWhite shadow transition-transform ${isSoundEnabled ? "left-[22px]" : "left-0.5"
+                      }`}
                   />
                 </button>
               </div>
@@ -74,44 +72,40 @@ function SettingsPanel({ onClose }) {
           </section>
 
           <section>
-            <h3 className="mb-3 text-xs font-medium uppercase tracking-wide text-slate-400">
+            <h3 className="mb-3 text-xs font-medium uppercase tracking-wide text-prsSilver">
               Theme
             </h3>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => handleThemeChange("dark")}
-                className={`rounded-xl border p-4 text-left transition-colors ${
-                  theme === "dark"
-                    ? "border-cyan-500/50 bg-cyan-500/10"
-                    : "border-slate-700/50 bg-slate-800/40 hover:bg-slate-800/70"
-                }`}
+                className={`rounded-xl border p-4 text-left transition-colors ${theme === "dark"
+                    ? "border-prsBlue/50 bg-prsBlue/10"
+                    : "border-prsSlate/80 bg-prsCharcoal/70 hover:bg-prsCharcoal/90"
+                  }`}
               >
                 <MoonIcon
-                  className={`mb-3 size-6 ${
-                    theme === "dark" ? "text-cyan-400" : "text-slate-400"
-                  }`}
+                  className={`mb-3 size-6 ${theme === "dark" ? "text-prsSky" : "text-prsSilver"
+                    }`}
                 />
-                <p className="text-sm font-medium text-slate-200">Dark</p>
-                <p className="mt-1 text-xs text-slate-400">Default appearance</p>
+                <p className="text-sm font-medium text-prsSnow">Dark</p>
+                <p className="mt-1 text-xs text-prsSilver">Default appearance</p>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleThemeChange("light")}
-                className={`rounded-xl border p-4 text-left transition-colors ${
-                  theme === "light"
-                    ? "border-cyan-500/50 bg-cyan-500/10"
-                    : "border-slate-700/50 bg-slate-800/40 hover:bg-slate-800/70"
-                }`}
+                className={`rounded-xl border p-4 text-left transition-colors ${theme === "light"
+                    ? "border-prsBlue/50 bg-prsBlue/10"
+                    : "border-prsSlate/80 bg-prsCharcoal/70 hover:bg-prsCharcoal/90"
+                  }`}
               >
                 <SunIcon
-                  className={`mb-3 size-6 ${
-                    theme === "light" ? "text-cyan-400" : "text-slate-400"
-                  }`}
+                  className={`mb-3 size-6 ${theme === "light" ? "text-prsSky" : "text-prsSilver"
+                    }`}
                 />
-                <p className="text-sm font-medium text-slate-200">Light</p>
-                <p className="mt-1 text-xs text-slate-400">Coming soon</p>
+                <p className="text-sm font-medium text-prsSnow">Light</p>
+                <p className="mt-1 text-xs text-prsSilver">Coming soon</p>
               </button>
             </div>
           </section>

@@ -10,14 +10,14 @@ function ActiveTabSwitch() {
       <button
         onClick={() => setActiveTab("chats")}
         className={`flex w-full items-center justify-center rounded-xl py-2.5 leading-none ${
-          activeTab === "chats" ? "bg-cyan-600/50 text-cyan-100" : "text-slate-300"
+          activeTab === "chats" ? "bg-prsBlue/50 text-prsWhite" : "text-prsGray"
         }`}
       >Chats</button>
 
       <button
         onClick={() => setActiveTab("contacts")}
         className={`flex w-full items-center justify-center rounded-xl py-2.5 leading-none ${
-          activeTab === "contacts" ? "bg-cyan-600/50 text-cyan-100" : "text-slate-300"
+          activeTab === "contacts" ? "bg-prsBlue/50 text-prsWhite" : "text-prsGray"
         }`}
       >Contacts</button>
     </div>

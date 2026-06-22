@@ -13,7 +13,7 @@ const SETTINGS_SECTIONS = [
   {
     id: "general",
     label: "General",
-    description: "Startup and close",
+    description: "Notification and Theme",
     icon: SlidersHorizontalIcon,
   },
   {
@@ -41,11 +41,6 @@ function SettingsSidebar({ activeSection, onSectionChange }) {
   const handleSectionClick = (section) => {
     onSectionChange(section.id);
 
-    if (section.id === "profile") {
-      toast("Tap your avatar above to change your profile picture");
-      return;
-    }
-
     if (section.id === "account") {
       toast("Coming soon");
     }
@@ -53,7 +48,7 @@ function SettingsSidebar({ activeSection, onSectionChange }) {
   return (
     <>
     <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 py-3 sm:px-4">
-      <h2 className="px-2 pb-3 text-lg font-semibold text-slate-200">Settings</h2>
+      <h2 className="px-2 pb-3 text-lg font-semibold text-prsSnow">Settings</h2>
 
       <div className="space-y-1">
         {SETTINGS_SECTIONS.map((section) => {
@@ -67,20 +62,20 @@ function SettingsSidebar({ activeSection, onSectionChange }) {
               onClick={() => handleSectionClick(section)}
               className={`flex w-full items-center gap-4 rounded-xl px-3 py-3 text-left transition-colors ${
                 isActive
-                  ? "bg-slate-700/60"
-                  : "hover:bg-slate-700/40"
+                  ? "bg-prsBlue/20"
+                  : "hover:bg-prsBlue/10"
               }`}
             >
               <Icon
                 className={`size-6 shrink-0 ${
-                  isActive ? "text-cyan-400" : "text-slate-400"
+                  isActive ? "text-prsSky" : "text-prsSilver"
                 }`}
               />
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-slate-200">
+                <p className="text-sm font-medium text-prsSnow">
                   {section.label}
                 </p>
-                <p className="mt-0.5 text-xs leading-relaxed text-slate-400">
+                <p className="mt-0.5 text-xs leading-relaxed text-prsSilver">
                   {section.description}
                 </p>
               </div>
@@ -89,16 +84,16 @@ function SettingsSidebar({ activeSection, onSectionChange }) {
         })}
       </div>
 
-      <div className="mt-auto border-t border-slate-700/50 pt-3">
+      <div className="mt-auto border-t border-prsSlate/80 pt-3">
         <button
           type="button"
           onClick={() => setShowLogoutConfirm(true)}
-          className="flex w-full items-center gap-4 rounded-xl px-3 py-3 text-left text-red-400 transition-colors hover:bg-red-500/10"
+          className="flex w-full items-center gap-4 rounded-xl px-3 py-3 text-left text-prsRed transition-colors hover:bg-prsRed/10"
         >
           <LogOutIcon className="size-6 shrink-0" />
           <div>
             <p className="text-sm font-medium">Logout</p>
-            <p className="mt-0.5 text-xs leading-relaxed text-red-400/70">
+            <p className="mt-0.5 text-xs leading-relaxed text-prsRose/70">
               Sign out of your account
             </p>
           </div>
@@ -116,30 +111,30 @@ function SettingsSidebar({ activeSection, onSectionChange }) {
             role="dialog"
             aria-modal="true"
             aria-labelledby="logout-dialog-title"
-            className="w-full max-w-sm rounded-xl border border-slate-700/50 bg-slate-800 p-6 shadow-xl"
+            className="w-full max-w-sm rounded-xl border border-prsSlate/80 bg-prsCharcoal p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <h3
               id="logout-dialog-title"
-              className="text-lg font-medium text-slate-200"
+              className="text-lg font-medium text-prsSnow"
             >
               Log out?
             </h3>
-            <p className="mt-2 text-sm text-slate-400">
+            <p className="mt-2 text-sm text-prsSilver">
               Are you sure you want to sign out of your account?
             </p>
             <div className="mt-6 flex justify-end gap-3">
               <button
                 type="button"
                 onClick={() => setShowLogoutConfirm(false)}
-                className="rounded-lg px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-700/50"
+                className="rounded-lg px-4 py-2 text-sm font-medium text-prsWhite transition-colors hover:bg-prsBlue/20"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleLogoutConfirm}
-                className="rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600"
+                className="rounded-lg bg-prsRed px-4 py-2 text-sm font-medium text-prsWhite transition-colors hover:bg-prsRed/80"
               >
                 Log out
               </button>
