@@ -2,9 +2,6 @@
 
 A fast, secure, and reliable realtime messaging platform. ChatWar lets you start conversations in seconds — no installation, no hassle. It is a full-stack chat application with instant message delivery over Socket.IO, a polished responsive UI, dark/light theming, and account management.
 
-> This project's FRONTEND is deployed in VERCEL
-> This project's BACKEND is deployed in RENDER -- because of socket.io
-
 ---
 
 ## Features
