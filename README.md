@@ -9,85 +9,34 @@ A fast, secure, and reliable realtime messaging platform. ChatWar lets you start
 
 ## Features
 
-### Real-time messaging
-- Messages are delivered the moment they are sent over a **Socket.IO** connection — no refresh required.
-- **Optimistic sending**: your message appears instantly, then reconciles with the server response.
-- Incoming messages are appended live to the open conversation, and the **notification sound** plays when a new message arrives (toggleable).
-
-### Authentication & accounts
-- Full **signup / login / logout** flow with JSON Web Token sessions stored in httpOnly cookies.
-- **Instant session validation** on app load (`/api/auth/check`) with automatic redirects to the correct page.
-- **Username validation** (3–20 chars, lowercase letters, digits, underscores) and a **strong password policy** (8+ chars, must include letters, digits, and special characters).
-- Live, real-time validation feedback on the signup and login forms.
-- **Profile picture upload** with Cloudinary, plus profile updates.
-
-### Chat experience
-- **Chats & Contacts** tabs to switch between your existing conversations and all available users.
-- One-to-one chat history, with messages stored and fetched per conversation.
-- **Search contacts** by username to start new conversations quickly.
-- Online presence indicator synced across clients through Socket.IO.
-- Skeleton loading states and empty-state placeholders for a polished feel.
-
-### Appearance
-- **Dark & Light themes** that persist across the whole app (single source of truth in the store, stored in `localStorage`).
-- Theme toggle available on the landing page footer and in **Settings → Theme**.
-- Responsive layout that adapts from mobile to desktop (panel-based sidebar + chat view).
-
-### Settings & profile
-- Settings sidebar with **General** (notification sounds, theme) and **Profile** (avatar, display info) sections.
-- Per-user preferences for **message sound notifications**.
-
-### Super admin mode
-- Shielded **Super Admin** mode to browse all registered users — gated behind a password prompt and automatically locked when leaving the app or entering settings.
+- **Real-time messaging** — instant delivery over Socket.IO, optimistic sending, and live incoming messages with a toggleable notification sound.
+- **Authentication** — signup/login/logout with JWT sessions in httpOnly cookies, session validation on load, strong password policy, and live form validation.
+- **Profile** — Cloudinary avatar upload and profile updates.
+- **Chat experience** — Chats & Contacts tabs, contact search, one-to-one chat history, online presence, skeleton loading, and empty states.
+- **Appearance** — persisted dark & light themes (landing footer + Settings), responsive mobile-to-desktop layout.
+- **Settings & profile** — General (sounds, theme) and Profile (avatar) sections.
+- **Super admin mode** — password-gated directory of all users, auto-locked on exit.
 
 ---
 
 ## Tech Stack
 
-### Frontend
-- **React 19** + **Vite 8**
-- **Tailwind CSS 3** + **daisyUI 5**
-- **Zustand** — global state management
-- **Socket.IO client** — realtime communication
-- **React Router 7** — routing
-- **lucide-react** — icons
-- **react-hot-toast** — notifications
-
-### Backend
-- **Node.js** + **Express**
-- **MongoDB** + **Mongoose**
-- **Socket.IO** — realtime event delivery
-- **JSON Web Tokens** (httpOnly cookies) for authentication
-- **bcryptjs** — password hashing
-- **Cloudinary** — image uploads (profile pictures, message images)
-- **Arcjet** — bot detection & rate limiting (wired, configurable)
-- **Mailjet** — email service (configured)
+- **Frontend:** React 19, Vite 8, Tailwind CSS, daisyUI, Zustand, Socket.IO client, React Router, lucide-react, react-hot-toast
+- **Backend:** Node.js, Express, MongoDB (Mongoose), Socket.IO, JWT, bcryptjs, Cloudinary, Arcjet, Mailjet
 
 ---
 
 ## Getting Started
 
-### Prerequisites
-- Node.js (v18+)
-- MongoDB (local instance or MongoDB Atlas)
-- A Cloudinary account for image uploads
-- (Optional) Arcjet and Mailjet accounts for security/email features
+**Prerequisites:** Node.js 18+, MongoDB (local or Atlas), Cloudinary account. (Arcjet & Mailjet optional.)
 
-### 1. Clone the repository
+### 1. Backend
 
 ```bash
-git clone https://github.com/your-username/chatwar.git
-cd chatwar
+cd backend && npm install
 ```
 
-### 2. Backend setup
-
-```bash
-cd backend
-npm install
-```
-
-Create a `.env` file in the `backend` folder with the following variables:
+Create `backend/.env`:
 
 ```
 PORT=8001
@@ -96,47 +45,27 @@ FRONTEND_URL=http://localhost:5173
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 EXPIRES_IN=7d
-
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-
-# Optional — Arcjet security
-ARCJET_KEY=your_arcjet_key
-ARCJET_ENV=development
-
-# Optional — Mailjet emails
-SMTP_FROM=no-reply@example.com
-MAILJET_API_KEY=your_mailjet_key
-MAILJET_API_SECRET=your_mailjet_secret
+# Optional: ARCJET_KEY, ARCJET_ENV, SMTP_FROM, MAILJET_API_KEY, MAILJET_API_SECRET
 ```
 
-Run the backend:
+Run: `npm run dev`
+
+### 2. Frontend
 
 ```bash
-npm run dev
+cd frontend && npm install
 ```
 
-### 3. Frontend setup
-
-```bash
-cd frontend
-npm install
-```
-
-Create a `.env` file in the `frontend` folder:
+Create `frontend/.env`:
 
 ```
 VITE_BACKEND_URL=http://localhost:8001
 ```
 
-Run the frontend:
-
-```bash
-npm run dev
-```
-
-Open `http://localhost:5173` in your browser.
+Run: `npm run dev` — then open `http://localhost:5173`.
 
 ---
 
@@ -145,33 +74,11 @@ Open `http://localhost:5173` in your browser.
 > This project's FRONTEND is deployed in VERCEL
 > This project's BACKEND is deployed in RENDER -- because of socket.io
 
-- **Frontend (Vercel)**: build the frontend with `npm run build` and point Vercel at the `frontend` directory. The included `vercel.json` rewrites all routes to `index.html` for client-side routing support. Set `VITE_BACKEND_URL` to your Render backend URL.
-- **Backend (Render)**: deploy the `backend` folder as a **Web Service**. Because realtime messaging relies on persistent Socket.IO connections (WebSockets), a long-running server — rather than a serverless function — is required. Set the `PORT`, `MONGODB_URI`, `JWT_SECRET`, `FRONTEND_URL`, and Cloudinary variables in Render's environment settings.
+- **Frontend (Vercel)**: point Vercel at the `frontend` directory — the included `vercel.json` handles SPA routing. Set `VITE_BACKEND_URL` to your Render URL.
+- **Backend (Render)**: deploy the `backend` folder as a **Web Service** (real-time messaging needs persistent WebSocket connections, not serverless). Set `PORT`, `MONGODB_URI`, `JWT_SECRET`, `FRONTEND_URL`, and Cloudinary vars.
 
 ---
 
-## API Overview
-
-| Method | Endpoint                    | Description                          | Auth |
-|--------|-----------------------------|--------------------------------------|------|
-| POST   | `/api/auth/signup`          | Register a new account               | No   |
-| POST   | `/api/auth/login`           | Log in with username & password      | No   |
-| POST   | `/api/auth/logout`          | End the session                      | No   |
-| GET    | `/api/auth/check`           | Validate the current session         | Yes  |
-| PUT    | `/api/auth/update-profile`  | Update profile (Cloudinary upload)   | Yes  |
-| GET    | `/api/messages/contacts`    | List all users (contacts)            | Yes  |
-| GET    | `/api/messages/chats`       | List users you have chatted with     | Yes  |
-| GET    | `/api/messages/:id`         | Get message history with a user      | Yes  |
-| POST   | `/api/messages/send/:id`    | Send a text or image message         | Yes  |
-
-### Socket events
-
-| Event              | Direction  | Payload              | Purpose                          |
-|--------------------|------------|----------------------|----------------------------------|
-| `getOnlineUsers`   | server→client | `string[]` (user ids) | Broadcast online presence        |
-| `newMessage`       | server→client | message object        | Deliver a message in real time   |
-
----
 
 ## Project Structure
 
@@ -207,9 +114,3 @@ chatwar/
 - All message and profile routes are protected by an auth middleware (`protectRoute`).
 - **Arcjet** is configured for SQL-injection shielding, bot detection, and rate limiting.
 - `express.json({ limit: "10mb" })` with a dedicated handler returns a friendly error for oversized image uploads.
-
----
-
-## License
-
-This project is licensed under the ISC License.
