@@ -17,7 +17,7 @@ import ProfilePanel from "../components/ProfilePanel";
 import NoSettingsOpenPlaceholder from "../components/NoSettingsOpenPlaceholder";
 
 function ChatPage() {
-  const { activeTab, superAdminMode, selectedUser } = useChatStore();
+  const { activeTab, superAdminMode, selectedUser, theme } = useChatStore();
   const socket = useAuthStore((state) => state.socket);
   const location = useLocation();
   const isSettings = location.pathname === "/settings";
@@ -30,6 +30,12 @@ function ChatPage() {
   useEffect(() => {
     if (!isSettings) {
       setActiveSettingsSection(null);
+    }
+  }, [isSettings]);
+
+  useEffect(() => {
+    if (isSettings) {
+      useChatStore.getState().setSuperAdminMode(false)
     }
   }, [isSettings]);
 
@@ -64,11 +70,11 @@ function ChatPage() {
 
   return (
     <ChatNavigationProvider>
-      <div className="relative h-full w-full">
+      <div className="relative h-full w-full chat-app" data-auth-theme={theme === "light" ? "light" : "dark"}>
         <div className="flex h-full min-h-0 w-full flex-col overflow-hidden app-gradient-bg md:flex-row">
           {/* LEFT SIDE */}
           <div
-            className={`min-h-0 w-full flex-col panel-surface md:flex md:w-72 md:flex-none md:shrink-0 lg:w-[22rem] ${
+            className={`min-h-0 w-full flex-col panel-surface md:flex md:w-72 md:flex-none md:shrink-0 md:border-r border-prsBorder lg:w-[22rem] ${
               showListOnMobile ||
               (showSettingsOnMobile && !showSettingsPanelOnMobile)
                 ? "flex flex-1"

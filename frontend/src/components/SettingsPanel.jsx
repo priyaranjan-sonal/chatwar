@@ -1,15 +1,10 @@
 import { BellIcon, MoonIcon, SlidersHorizontalIcon, SunIcon, XIcon } from "lucide-react"
-import toast from "react-hot-toast"
 import { useChatStore } from "../store/useChatStore"
 
 function SettingsPanel({ onClose }) {
   const { isSoundEnabled, toggleSound, theme, setTheme } = useChatStore()
 
   const handleThemeChange = (nextTheme) => {
-    if (nextTheme === "light") {
-      toast("Light theme coming soon")
-      return
-    }
     setTheme(nextTheme)
   }
 
@@ -28,7 +23,7 @@ function SettingsPanel({ onClose }) {
         <button
           type="button"
           onClick={onClose}
-          className="flex size-10 shrink-0 items-center justify-center rounded-full text-prsSilver transition-colors hover:bg-prsGraphite/80 hover:text-prsSnow"
+          className="flex size-10 shrink-0 items-center justify-center rounded-full text-prsSilver transition-colors hover:bg-prsRed/20 hover:text-prsRed"
           aria-label="Close section"
         >
           <XIcon className="size-5" />
@@ -101,7 +96,7 @@ function SettingsPanel({ onClose }) {
                   className={`mb-3 size-6 ${theme === "light" ? "text-prsSky" : "text-prsSilver"}`}
                 />
                 <p className="text-sm font-medium text-prsSnow">Light</p>
-                <p className="mt-1 text-xs text-prsSilver">Coming soon</p>
+                <p className="mt-1 text-xs text-prsSilver">Bright appearance</p>
               </button>
             </div>
           </section>

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { Link } from "react-router"
 import {
   MessageCircleIcon,
@@ -13,6 +12,7 @@ import {
   SunIcon,
   MoonIcon,
 } from 'lucide-react'
+import { useAppTheme } from "../library/useAppTheme.js"
 
 const NAV_LINKS = [
   { label: "Home", href: "#home" },
@@ -67,14 +67,7 @@ const STATS = [
 ]
 
 function LandingPage() {
-  const [isLightMode, setIsLightMode] = useState(() => {
-    const saved = localStorage.getItem("auth-theme")
-    return saved === "light"
-  })
-
-  useEffect(() => {
-    localStorage.setItem("auth-theme", isLightMode ? "light" : "dark")
-  }, [isLightMode])
+  const [isLightMode, setIsLightMode] = useAppTheme()
 
   const scrollToSection = (e, href) => {
     e.preventDefault()

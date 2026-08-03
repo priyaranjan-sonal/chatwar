@@ -41,7 +41,7 @@ function ContactsSearch() {
           <button
             type="button"
             onClick={() => setQuery("")}
-            className="absolute right-5 top-1/2 -translate-y-1/2 text-prsSilver transition-colors hover:text-prsSnow"
+            className="absolute right-5 top-1/2 -translate-y-1/2 rounded-full p-1 text-prsSilver transition-colors hover:bg-prsRed/20 hover:text-prsRed"
           >
             <XIcon className="size-4" />
           </button>

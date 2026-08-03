@@ -359,9 +359,86 @@ input:not([type="file"]):not([type="hidden"]):-moz-autofill {
 }
 
 [data-auth-theme="light"] .hover\:bg-prsGraphite:hover {
-    background-color: #eef1f6;
+    background-color: rgba(0, 100, 224, 0.12);
 }
 
 [data-auth-theme="light"] .border-prsBorder {
     border-color: #dde2ea;
+}
+
+/* ── Light theme for the chat app ── */
+[data-auth-theme="light"] {
+    color-scheme: light;
+}
+
+.panel-header,
+.panel-main,
+.panel-surface,
+.chat-bubble-received {
+    transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease;
+}
+
+[data-auth-theme="light"] .panel-header {
+    background: #f8fafc;
+    border-color: #cdd3dc;
+}
+
+[data-auth-theme="light"] .chat-app .border-prsBorder {
+    border-color: #cdd3dc;
+}
+
+[data-auth-theme="light"] .panel-main {
+    background: #fbfcfe;
+}
+
+[data-auth-theme="light"] .panel-surface {
+    background: #f4f6fb;
+}
+
+[data-auth-theme="light"] .chat-brand {
+    color: #0f172a;
+}
+
+[data-auth-theme="light"] .chat-bubble-received {
+    background-color: #eef1f6;
+    color: #111827;
+}
+
+[data-auth-theme="light"] .chat-bubble-received::after {
+    background-color: #eef1f6;
+}
+
+[data-auth-theme="light"] .bg-prsBlue\/50 {
+    background-color: #0064E0;
+}
+
+[data-auth-theme="light"] .bg-prsCharcoal\/50,
+[data-auth-theme="light"] .bg-prsCharcoal\/70,
+[data-auth-theme="light"] .bg-prsCharcoal\/90 {
+    background-color: #ffffff;
+}
+
+[data-auth-theme="light"] .hover\:bg-prsCharcoal\/90:hover {
+    background-color: rgba(0, 100, 224, 0.12);
+}
+
+[data-auth-theme="light"] .bg-prsGraphite\/50,
+[data-auth-theme="light"] .bg-prsGraphite\/80 {
+    background-color: #eef1f6;
+}
+
+[data-auth-theme="light"] .hover\:bg-prsGraphite\/80:hover {
+    background-color: rgba(0, 100, 224, 0.12);
+}
+
+[data-auth-theme="light"] .hover\:text-prsSnow:hover {
+    color: #0f172a;
+}
+
+[data-auth-theme="light"] .hover\:text-prsYellow:hover {
+    color: #b45309;
+}
+
+[data-auth-theme="light"] .text-prsRose\/70 {
+    color: #ef4444;
 }

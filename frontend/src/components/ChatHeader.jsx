@@ -34,7 +34,7 @@ function ChatHeader() {
       <button
         type="button"
         onClick={closeChat}
-        className='flex size-10 shrink-0 items-center justify-center rounded-full text-prsSilver transition-colors hover:bg-prsGraphite/80 hover:text-prsSnow'
+        className='flex size-10 shrink-0 items-center justify-center rounded-full text-prsSilver transition-colors hover:bg-prsRed/20 hover:text-prsRed'
         aria-label="Close chat"
       >
         <XIcon className='size-5'/>

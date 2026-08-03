@@ -7,7 +7,7 @@ const SUPER_ADMIN_PASSWORD = "chatwar@1234"
 
 function ActiveTabSwitch() {
 
-  const {activeTab, superAdminMode, setActiveTab, setSuperAdminMode} = useChatStore()
+  const {activeTab, superAdminMode, setActiveTab, setSuperAdminMode, theme} = useChatStore()
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false)
   const [passwordInput, setPasswordInput] = useState("")
   const [passwordError, setPasswordError] = useState("")
@@ -68,8 +68,8 @@ function ActiveTabSwitch() {
           onClick={handleSuperAdminClick}
           className={`flex size-10 shrink-0 items-center justify-center rounded-xl transition-colors ${
             superAdminMode
-              ? "bg-prsYellow/20 text-prsYellow"
-              : "text-prsSilver hover:bg-prsYellow/10 hover:text-prsYellow"
+              ? "bg-prsYellow/50 text-prsYellow"
+              : "text-prsSilver hover:bg-prsYellow/30 hover:text-prsYellow"
           }`}
           aria-label="Super admin"
         >
@@ -80,7 +80,8 @@ function ActiveTabSwitch() {
       {showPasswordPrompt &&
         createPortal(
           <div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+            className="chat-app fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+            data-auth-theme={theme === "light" ? "light" : "dark"}
             onClick={() => setShowPasswordPrompt(false)}
           >
             <div
@@ -100,7 +101,7 @@ function ActiveTabSwitch() {
                 <button
                   type="button"
                   onClick={() => setShowPasswordPrompt(false)}
-                  className="flex size-8 items-center justify-center rounded-full text-prsSilver transition-colors hover:bg-prsGraphite/80 hover:text-prsSnow"
+                  className="flex size-8 items-center justify-center rounded-full text-prsSilver transition-colors hover:bg-prsRed/20 hover:text-prsRed"
                 >
                   <XIcon className="size-4" />
                 </button>
@@ -145,7 +146,7 @@ function ActiveTabSwitch() {
                 <button
                   type="button"
                   onClick={() => setShowPasswordPrompt(false)}
-                  className="rounded-lg px-4 py-2 text-sm font-medium text-prsWhite transition-colors hover:bg-prsBlue/20"
+                  className="rounded-lg px-4 py-2 text-sm font-medium text-prsSilver transition-colors hover:bg-prsBlue/20"
                 >
                   Cancel
                 </button>

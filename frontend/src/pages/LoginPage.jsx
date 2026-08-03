@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useAuthStore } from "../store/useAuthStore.js"
 import { MessageCircleIcon, AtSignIcon, LoaderIcon, SunIcon, MoonIcon, ArrowLeftIcon } from 'lucide-react'
 import { Link } from "react-router"
@@ -7,6 +7,7 @@ import {
   getLoginFieldErrors,
   hasFieldErrors,
 } from "../library/authValidation.js"
+import { useAppTheme } from "../library/useAppTheme.js"
 import AuthValidationGuide from "../components/AuthValidationGuide.jsx"
 import AuthPasswordInput from "../components/AuthPasswordInput.jsx"
 import AuthBrandTitle from "../components/AuthBrandTitle.jsx"
@@ -20,14 +21,7 @@ function LoginPage() {
   const [formData, setFormData] = useState({ username: "", password: "" })
   const [fieldErrors, setFieldErrors] = useState({ username: "", password: "" })
   const { login, isLoggingIn } = useAuthStore()
-  const [isLightMode, setIsLightMode] = useState(() => {
-    const saved = localStorage.getItem("auth-theme")
-    return saved === "light"
-  })
-
-  useEffect(() => {
-    localStorage.setItem("auth-theme", isLightMode ? "light" : "dark")
-  }, [isLightMode])
+  const [isLightMode, setIsLightMode] = useAppTheme()
 
   const updateField = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }))

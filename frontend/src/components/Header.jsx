@@ -29,7 +29,7 @@ function Header() {
       <div className="panel-header">
         <div className="flex min-w-0 items-center gap-2.5">
           <h1 className="text-2xl font-bold leading-none tracking-tight">
-            <span className="text-prsWhite">Chat</span>
+            <span className="chat-brand text-prsWhite">Chat</span>
             <span className="text-prsRed">War</span>
           </h1>
         </div>
@@ -39,7 +39,7 @@ function Header() {
             <button
               type="button"
               onClick={handleCloseSettings}
-              className="flex size-10 shrink-0 items-center justify-center rounded-full text-prsSilver transition-colors hover:bg-prsGraphite/80 hover:text-prsSnow"
+              className="flex size-10 shrink-0 items-center justify-center rounded-full text-prsSilver transition-colors hover:bg-prsRed/20 hover:text-prsRed"
               aria-label="Close settings"
             >
               <XIcon className="size-5" />

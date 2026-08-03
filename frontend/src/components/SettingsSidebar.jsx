@@ -8,6 +8,7 @@ import {
 } from "lucide-react"
 import toast from "react-hot-toast"
 import { useAuthStore } from "../store/useAuthStore"
+import { useChatStore } from "../store/useChatStore"
 
 const SETTINGS_SECTIONS = [
   {
@@ -32,6 +33,7 @@ const SETTINGS_SECTIONS = [
 
 function SettingsSidebar({ activeSection, onSectionChange }) {
   const { logout } = useAuthStore()
+  const { theme } = useChatStore()
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
 
   const handleLogoutConfirm = async () => {
@@ -106,7 +108,8 @@ function SettingsSidebar({ activeSection, onSectionChange }) {
     {showLogoutConfirm &&
       createPortal(
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+          className="chat-app fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+          data-auth-theme={theme === "light" ? "light" : "dark"}
           onClick={() => setShowLogoutConfirm(false)}
         >
           <div
@@ -129,7 +132,7 @@ function SettingsSidebar({ activeSection, onSectionChange }) {
               <button
                 type="button"
                 onClick={() => setShowLogoutConfirm(false)}
-                className="rounded-lg px-4 py-2 text-sm font-medium text-prsWhite transition-colors hover:bg-prsBlue/20"
+                className="rounded-lg px-4 py-2 text-sm font-medium text-prsSilver transition-colors hover:bg-prsBlue/20"
               >
                 Cancel
               </button>

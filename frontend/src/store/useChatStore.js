@@ -32,6 +32,18 @@ export const useChatStore = create((set, get) => ({
 
     setSuperAdminMode: (mode) => set({superAdminMode: mode}),
 
+    resetState: () => set({
+        allContacts: [],
+        chats: [],
+        messages: [],
+        activeTab: "chats",
+        superAdminMode: false,
+        selectedUser: null,
+        isUsersLoading: false,
+        isMessagesLoading: false,
+        isSendingMessage: false,
+    }),
+
     setSelectedUser: (selectedUser) => set({ selectedUser }),
 
     getAllContacts: async () => {

@@ -22,7 +22,7 @@ function App() {
 
     useEffect(() => {
       if (!authUser) {
-        useChatStore.setState({ selectedUser: null, messages: [] })
+        useChatStore.getState().resetState()
       }
     }, [authUser])
 
