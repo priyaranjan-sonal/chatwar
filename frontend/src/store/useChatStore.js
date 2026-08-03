@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { axiosInstance } from "../library/axios.js";
-import toast from "react-hot-toast";
+import { create } from "zustand"
+import { axiosInstance } from "../library/axios.js"
+import toast from "react-hot-toast"
 import { useAuthStore } from "./useAuthStore.js"
 import { playMessageNotification } from "../library/notificationSound.js"
 
@@ -9,6 +9,7 @@ export const useChatStore = create((set, get) => ({
     chats: [],
     messages: [],
     activeTab: "chats",
+    superAdminMode: false,
     selectedUser: null,
     isUsersLoading: false,
     isMessagesLoading: false,
@@ -27,7 +28,9 @@ export const useChatStore = create((set, get) => ({
         set({ theme })
     },
 
-    setActiveTab: (tab) => set({activeTab: tab}),
+    setActiveTab: (tab) => set({activeTab: tab, superAdminMode: false}),
+
+    setSuperAdminMode: (mode) => set({superAdminMode: mode}),
 
     setSelectedUser: (selectedUser) => set({ selectedUser }),
 

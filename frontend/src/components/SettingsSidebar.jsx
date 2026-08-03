@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react"
+import { createPortal } from "react-dom"
 import {
   SlidersHorizontalIcon,
   UserIcon,
   UserCircleIcon,
   LogOutIcon,
-} from "lucide-react";
-import toast from "react-hot-toast";
-import { useAuthStore } from "../store/useAuthStore";
+} from "lucide-react"
+import toast from "react-hot-toast"
+import { useAuthStore } from "../store/useAuthStore"
 
 const SETTINGS_SECTIONS = [
   {
@@ -28,23 +28,25 @@ const SETTINGS_SECTIONS = [
     description: "Security notifications, account info",
     icon: UserCircleIcon,
   },
-];
+]
+
 function SettingsSidebar({ activeSection, onSectionChange }) {
-  const { logout } = useAuthStore();
-  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const { logout } = useAuthStore()
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
 
   const handleLogoutConfirm = async () => {
-    setShowLogoutConfirm(false);
-    await logout();
-  };
+    setShowLogoutConfirm(false)
+    await logout()
+  }
 
   const handleSectionClick = (section) => {
-    onSectionChange(section.id);
+    onSectionChange(section.id)
 
     if (section.id === "account") {
-      toast("Coming soon");
+      toast("Coming soon")
     }
-  };
+  }
+
   return (
     <>
     <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 py-3 sm:px-4">
@@ -52,8 +54,8 @@ function SettingsSidebar({ activeSection, onSectionChange }) {
 
       <div className="space-y-1">
         {SETTINGS_SECTIONS.map((section) => {
-          const Icon = section.icon;
-          const isActive = activeSection === section.id;
+          const Icon = section.icon
+          const isActive = activeSection === section.id
 
           return (
             <button
@@ -80,11 +82,11 @@ function SettingsSidebar({ activeSection, onSectionChange }) {
                 </p>
               </div>
             </button>
-          );
+          )
         })}
       </div>
 
-      <div className="mt-auto border-t border-prsSlate/80 pt-3">
+      <div className="mt-auto border-t border-prsBorder pt-3">
         <button
           type="button"
           onClick={() => setShowLogoutConfirm(true)}
@@ -111,7 +113,7 @@ function SettingsSidebar({ activeSection, onSectionChange }) {
             role="dialog"
             aria-modal="true"
             aria-labelledby="logout-dialog-title"
-            className="w-full max-w-sm rounded-xl border border-prsSlate/80 bg-prsCharcoal p-6 shadow-xl"
+            className="w-full max-w-sm rounded-xl border border-prsBorder bg-prsCharcoal p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <h3
@@ -144,7 +146,7 @@ function SettingsSidebar({ activeSection, onSectionChange }) {
         document.body
       )}
     </>
-  );
+  )
 }
 
-export default SettingsSidebar;
+export default SettingsSidebar

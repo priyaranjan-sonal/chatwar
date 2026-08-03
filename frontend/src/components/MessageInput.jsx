@@ -47,14 +47,14 @@ function MessageInput() {
   }
 
   return (
-    <div className="shrink-0 border-t border-prsSlate/80 p-3 sm:p-4 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+    <div className="shrink-0 border-t border-prsBorder p-3 sm:p-4 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
       {imagePreview && (
         <div className="mb-3 flex items-center">
           <div className="relative">
             <img
               src={imagePreview}
               alt="Preview"
-              className="w-20 h-20 object-cover rounded-lg border border-prsSlate"
+              className="w-20 h-20 object-cover rounded-lg border border-prsBorder"
             />
             <button
               onClick={removeImage}
@@ -72,9 +72,6 @@ function MessageInput() {
           type="file"
           accept="image/*"
           ref={fileInputRef}
-          onClick={(e) => {
-            e.currentTarget.value = ""
-          }}
           onChange={handleImageChange}
           className="hidden"
         />
@@ -85,7 +82,7 @@ function MessageInput() {
             if (fileInputRef.current) fileInputRef.current.value = ""
             fileInputRef.current?.click()
           }}
-          className={`flex items-center justify-center h-11 w-11 shrink-0 panel-surface border border-prsSlate/80 text-prsSilver hover:text-prsSnow rounded-lg transition-colors ${
+          className={`flex items-center justify-center h-11 w-11 shrink-0 panel-surface border border-prsBorder text-prsSilver hover:text-prsSnow rounded-lg transition-colors ${
             imagePreview ? "text-prsBlue border-prsBlue/50" : ""
           }`}
         >
@@ -97,7 +94,7 @@ function MessageInput() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Type your message..."
-          className="flex-1 min-w-0 h-11 panel-surface border border-prsSlate/80 rounded-xl px-4 text-prsSnow placeholder:text-prsSilver focus:outline-none focus:border-prsBlue/50"
+          className="flex-1 min-w-0 h-11 panel-surface border border-prsBorder rounded-xl px-4 text-prsSnow placeholder:text-prsSilver focus:outline-none focus:border-prsBlue/50"
         />
 
         <button

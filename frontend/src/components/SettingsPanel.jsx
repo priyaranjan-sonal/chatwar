@@ -1,17 +1,17 @@
-import { BellIcon, MoonIcon, SlidersHorizontalIcon, SunIcon, XIcon } from "lucide-react";
-import toast from "react-hot-toast";
-import { useChatStore } from "../store/useChatStore";
+import { BellIcon, MoonIcon, SlidersHorizontalIcon, SunIcon, XIcon } from "lucide-react"
+import toast from "react-hot-toast"
+import { useChatStore } from "../store/useChatStore"
 
 function SettingsPanel({ onClose }) {
-  const { isSoundEnabled, toggleSound, theme, setTheme } = useChatStore();
+  const { isSoundEnabled, toggleSound, theme, setTheme } = useChatStore()
 
   const handleThemeChange = (nextTheme) => {
     if (nextTheme === "light") {
-      toast("Light theme coming soon");
-      return;
+      toast("Light theme coming soon")
+      return
     }
-    setTheme(nextTheme);
-  };
+    setTheme(nextTheme)
+  }
 
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col">
@@ -41,7 +41,7 @@ function SettingsPanel({ onClose }) {
             <h3 className="mb-3 text-xs font-medium uppercase tracking-wide text-prsSilver">
               Notifications
             </h3>
-            <div className="rounded-xl border border-prsSlate/80 bg-prsCharcoal/70 p-4">
+            <div className="rounded-xl border border-prsBorder bg-prsCharcoal/70 p-4">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex min-w-0 items-center gap-3">
                   <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-prsBlue/10">
@@ -59,12 +59,10 @@ function SettingsPanel({ onClose }) {
                   role="switch"
                   aria-checked={isSoundEnabled}
                   onClick={toggleSound}
-                  className={`relative h-7 w-12 shrink-0 rounded-full transition-colors ${isSoundEnabled ? "bg-prsBlue" : "bg-prsSlate"
-                    }`}
+                  className={`relative h-7 w-12 shrink-0 rounded-full transition-colors ${isSoundEnabled ? "bg-prsBlue" : "bg-prsSlate"}`}
                 >
                   <span
-                    className={`absolute top-0.5 size-6 rounded-full bg-prsWhite shadow transition-transform ${isSoundEnabled ? "left-[22px]" : "left-0.5"
-                      }`}
+                    className={`absolute top-0.5 size-6 rounded-full bg-prsWhite shadow transition-transform ${isSoundEnabled ? "left-[22px]" : "left-0.5"}`}
                   />
                 </button>
               </div>
@@ -81,12 +79,11 @@ function SettingsPanel({ onClose }) {
                 onClick={() => handleThemeChange("dark")}
                 className={`rounded-xl border p-4 text-left transition-colors ${theme === "dark"
                     ? "border-prsBlue/50 bg-prsBlue/10"
-                    : "border-prsSlate/80 bg-prsCharcoal/70 hover:bg-prsCharcoal/90"
+                    : "border-prsBorder bg-prsCharcoal/70 hover:bg-prsCharcoal/90"
                   }`}
               >
                 <MoonIcon
-                  className={`mb-3 size-6 ${theme === "dark" ? "text-prsSky" : "text-prsSilver"
-                    }`}
+                  className={`mb-3 size-6 ${theme === "dark" ? "text-prsSky" : "text-prsSilver"}`}
                 />
                 <p className="text-sm font-medium text-prsSnow">Dark</p>
                 <p className="mt-1 text-xs text-prsSilver">Default appearance</p>
@@ -97,12 +94,11 @@ function SettingsPanel({ onClose }) {
                 onClick={() => handleThemeChange("light")}
                 className={`rounded-xl border p-4 text-left transition-colors ${theme === "light"
                     ? "border-prsBlue/50 bg-prsBlue/10"
-                    : "border-prsSlate/80 bg-prsCharcoal/70 hover:bg-prsCharcoal/90"
+                    : "border-prsBorder bg-prsCharcoal/70 hover:bg-prsCharcoal/90"
                   }`}
               >
                 <SunIcon
-                  className={`mb-3 size-6 ${theme === "light" ? "text-prsSky" : "text-prsSilver"
-                    }`}
+                  className={`mb-3 size-6 ${theme === "light" ? "text-prsSky" : "text-prsSilver"}`}
                 />
                 <p className="text-sm font-medium text-prsSnow">Light</p>
                 <p className="mt-1 text-xs text-prsSilver">Coming soon</p>
@@ -112,7 +108,7 @@ function SettingsPanel({ onClose }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default SettingsPanel;
+export default SettingsPanel

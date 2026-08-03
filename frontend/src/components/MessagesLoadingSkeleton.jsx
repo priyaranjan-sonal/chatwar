@@ -18,6 +18,7 @@ function MessagesLoadingSkeleton() {
         )
       })}
     </div>
-  );
+  )
 }
-export default MessagesLoadingSkeleton;
+
+export default MessagesLoadingSkeleton

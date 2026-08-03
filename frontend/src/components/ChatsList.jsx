@@ -26,7 +26,7 @@ function ChatsList() {
         return (
         <div
           key={chat._id}
-          className={`w-full px-4 py-2.5 cursor-pointer transition-colors border-b border-prsSlate/50 md:rounded-lg md:border-b-0 ${
+          className={`w-full px-4 py-2.5 cursor-pointer transition-colors border-b border-prsBorder md:rounded-lg md:border-b-0 ${
             isSelected ? "bg-prsBlue/20" : "hover:bg-prsBlue/10"
           }`}
           onClick={() => openChat(chat)}

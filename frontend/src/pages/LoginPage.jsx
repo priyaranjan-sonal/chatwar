@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuthStore } from "../store/useAuthStore.js"
-import { MessageCircleIcon, AtSignIcon, LoaderIcon } from 'lucide-react'
+import { MessageCircleIcon, AtSignIcon, LoaderIcon, SunIcon, MoonIcon, ArrowLeftIcon } from 'lucide-react'
 import { Link } from "react-router"
 import {
   normalizeUsername,
@@ -20,6 +20,14 @@ function LoginPage() {
   const [formData, setFormData] = useState({ username: "", password: "" })
   const [fieldErrors, setFieldErrors] = useState({ username: "", password: "" })
   const { login, isLoggingIn } = useAuthStore()
+  const [isLightMode, setIsLightMode] = useState(() => {
+    const saved = localStorage.getItem("auth-theme")
+    return saved === "light"
+  })
+
+  useEffect(() => {
+    localStorage.setItem("auth-theme", isLightMode ? "light" : "dark")
+  }, [isLightMode])
 
   const updateField = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -42,8 +50,25 @@ function LoginPage() {
   }
 
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full" data-auth-theme={isLightMode ? "light" : "dark"}>
       <div className="flex h-full min-h-0 w-full flex-col overflow-hidden app-gradient-bg">
+        <button
+          type="button"
+          onClick={() => setIsLightMode((prev) => !prev)}
+          className={`fixed top-4 right-4 z-50 flex items-center gap-2.5 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors ${isLightMode ? "border-prsRed bg-prsRed/10 text-prsGray hover:bg-prsRed/20" : "border-prsBlue bg-prsBlue/10 text-prsSilver hover:bg-prsBlue/20"}`}
+          aria-label={isLightMode ? "Switch to dark mode" : "Switch to light mode"}
+        >
+          <span className={isLightMode ? "text-prsRed" : "text-prsSnow"}>Light</span>
+          <div className={`relative h-5 w-9 rounded-full ${isLightMode ? "bg-prsRed/20" : "bg-prsBlue/20"}`}>
+            <div
+              className={`absolute top-0.5 flex size-4 items-center justify-center rounded-full shadow transition-transform ${isLightMode ? "left-0.5 bg-white" : "left-[18px] bg-prsSilver"}`}
+            >
+              {isLightMode ? <SunIcon className="size-3 text-prsRed" /> : <MoonIcon className="size-3 text-prsBlue" />}
+            </div>
+          </div>
+          <span className={!isLightMode ? "text-prsBlue" : "text-prsSlate"}>Dark</span>
+        </button>
+
         <div className="flex min-h-0 flex-1 w-full md:grid md:grid-cols-[3fr_2fr] md:h-full">
 
           <div className="auth-hero-panel">
@@ -69,7 +94,7 @@ function LoginPage() {
             </div>
           </div>
 
-          <div className="auth-form-panel md:border-l md:border-prsSlate">
+          <div className="auth-form-panel md:self-center md:h-auto md:border-l md:border-prsBorder">
             <div className="auth-form-inner">
               <div className="auth-page-header">
                 <AuthBrandTitle />
@@ -120,15 +145,22 @@ function LoginPage() {
                 </div>
               </form>
 
-              <div className="auth-footer">
-                New to ChatWar?{" "}
+              <div className="mt-5">
                 <Link
                   to="/signup"
-                  className="font-medium text-prsSky transition-colors hover:text-prsBlue hover:underline"
+                  className="block w-full rounded-lg border border-prsBlue bg-transparent py-2.5 text-center text-sm font-medium text-prsBlue transition-colors hover:bg-prsBlue/10"
                 >
-                  Signup
+                  Create a new account
                 </Link>
               </div>
+
+              <Link
+                to="/"
+                className="mt-4 flex items-center justify-center gap-1.5 text-sm font-medium text-prsSilver transition-colors hover:text-prsSky"
+              >
+                <ArrowLeftIcon className="size-4" />
+                Back to home
+              </Link>
             </div>
           </div>
         </div>

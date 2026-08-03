@@ -1,6 +1,6 @@
-import { MessageCircleIcon } from "lucide-react";
+import { MessageCircleIcon } from "lucide-react"
 
-const NoChatHistoryPlaceholder = ({ name }) => {
+function NoChatHistoryPlaceholder({ name }) {
   return (
     <div className="flex flex-col items-center justify-center h-full text-center p-4 sm:p-6">
       <div className="w-16 h-16 bg-gradient-to-br from-prsBlue/20 to-prsSky/10 rounded-full flex items-center justify-center mb-5">
@@ -27,7 +27,7 @@ const NoChatHistoryPlaceholder = ({ name }) => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NoChatHistoryPlaceholder;
+export default NoChatHistoryPlaceholder

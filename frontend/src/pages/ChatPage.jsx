@@ -7,7 +7,8 @@ import { ChatNavigationProvider } from "../context/ChatNavigationContext.jsx";
 import Header from "../components/Header";
 import ActiveTabSwitch from "../components/ActiveTabSwitch";
 import ChatsList from "../components/ChatsList";
-import ContactList from "../components/ContactList";
+import AllUsersList from "../components/AllUsersList";
+import ContactsSearch from "../components/ContactsSearch";
 import ChatContainer from "../components/ChatContainer";
 import NoConversationPlaceholder from "../components/NoConversationPlaceholder";
 import SettingsSidebar from "../components/SettingsSidebar";
@@ -16,7 +17,7 @@ import ProfilePanel from "../components/ProfilePanel";
 import NoSettingsOpenPlaceholder from "../components/NoSettingsOpenPlaceholder";
 
 function ChatPage() {
-  const { activeTab, selectedUser } = useChatStore();
+  const { activeTab, superAdminMode, selectedUser } = useChatStore();
   const socket = useAuthStore((state) => state.socket);
   const location = useLocation();
   const isSettings = location.pathname === "/settings";
@@ -84,9 +85,15 @@ function ChatPage() {
             ) : (
               <>
                 <ActiveTabSwitch />
-                <div className="flex-1 overflow-y-auto px-4 pb-4 pt-0">
-                  {activeTab === "chats" ? <ChatsList /> : <ContactList />}
-                </div>
+                {superAdminMode ? (
+                  <AllUsersList />
+                ) : activeTab === "chats" ? (
+                  <div className="flex-1 overflow-y-auto px-4 pb-4 pt-0">
+                    <ChatsList />
+                  </div>
+                ) : (
+                  <ContactsSearch />
+                )}
               </>
             )}
           </div>

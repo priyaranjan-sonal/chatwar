@@ -1,0 +1,63 @@
+import React, { useEffect } from 'react'
+import { ShieldCheckIcon } from "lucide-react";
+import { useChatStore } from "../store/useChatStore.js"
+import UsersLoadingSkeleton from "../components/UsersLoadingSkeleton.jsx"
+import { useAuthStore } from '../store/useAuthStore.js'
+import { useChatNavigation } from '../context/ChatNavigationContext.jsx'
+
+function AllUsersList() {
+
+  const { getAllContacts, allContacts, isUsersLoading, selectedUser } = useChatStore()
+  const { onlineUsers } = useAuthStore()
+  const { openChat } = useChatNavigation()
+
+  useEffect(() => {
+    getAllContacts()
+  }, [getAllContacts])
+
+  if (isUsersLoading) return <UsersLoadingSkeleton />
+
+  return (
+    <div className="flex flex-col h-full">
+      <div className="flex items-center gap-2 px-4 py-3 shrink-0 border-b border-prsYellow/50">
+        <ShieldCheckIcon className="size-5 text-prsYellow" />
+        <h3 className="text-sm font-medium text-prsYellow">All Users</h3>
+      </div>
+      <div className="flex-1 overflow-y-auto">
+        <div className="-mx-4 md:mx-0 md:space-y-1">
+          {allContacts.map((contact) => {
+            const isSelected = selectedUser && String(selectedUser._id) === String(contact._id)
+
+            return (
+            <div
+              key={contact._id}
+              className={`w-full px-4 py-2.5 cursor-pointer transition-colors border-b border-prsBorder md:rounded-lg md:border-b-0 ${
+                isSelected ? "bg-prsBlue/20" : "hover:bg-prsBlue/10"
+              }`}
+              onClick={() => openChat(contact)}
+            >
+              <div className="flex items-center gap-3">
+                <div className={`avatar ${onlineUsers.includes(contact._id) ? "avatar-online" : "avatar-offline"}`}>
+                  <div className="size-12 rounded-full overflow-hidden">
+                    <img
+                      src={contact.profilePic || "/avatar.png"}
+                      alt={contact.fullName}
+                      className="size-full object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h4 className="text-prsSnow font-medium truncate">{contact.fullName}</h4>
+                  <p className="text-xs text-prsSilver truncate">@{contact.username}</p>
+                </div>
+              </div>
+            </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default AllUsersList

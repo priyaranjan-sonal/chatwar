@@ -1,35 +1,37 @@
-import { useRef, useState } from "react";
-import { UserIcon, XIcon, CameraIcon, LoaderIcon } from "lucide-react";
-import { useAuthStore } from "../store/useAuthStore";
+import { useRef, useState } from "react"
+import { UserIcon, XIcon, CameraIcon, LoaderIcon } from "lucide-react"
+import { useAuthStore } from "../store/useAuthStore"
 
 function ProfilePanel({ onClose }) {
-  const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
-  const [fullName, setFullName] = useState(authUser?.fullName || "");
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const fileInputRef = useRef(null);
+  const { authUser, isUpdatingProfile, updateProfile } = useAuthStore()
+  const [fullName, setFullName] = useState(authUser?.fullName || "")
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [preview, setPreview] = useState(null)
+  const fileInputRef = useRef(null)
 
   const handleFileSelect = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setSelectedFile(file);
-    const reader = new FileReader();
-    reader.onloadend = () => setPreview(reader.result);
-    reader.readAsDataURL(file);
-  };
+    const file = e.target.files?.[0]
+    if (!file) return
+    setSelectedFile(file)
+    const reader = new FileReader()
+    reader.onloadend = () => setPreview(reader.result)
+    reader.readAsDataURL(file)
+  }
 
   const handleSave = async () => {
-    const data = new FormData();
-    data.append("fullName", fullName.trim());
+    const data = {}
     if (selectedFile) {
-      data.append("profilePic", selectedFile);
+      data.profilePic = preview
     }
-    await updateProfile(data);
-  };
+    if (fullName.trim() !== authUser?.fullName) {
+      data.fullName = fullName.trim()
+    }
+    await updateProfile(data)
+  }
 
-  const currentPic = preview || authUser?.profilePic || "/avatar.png";
+  const currentPic = preview || authUser?.profilePic || "/avatar.png"
 
-  const hasChanges = fullName.trim() !== authUser?.fullName || selectedFile !== null;
+  const hasChanges = (fullName.trim() !== authUser?.fullName) || selectedFile !== null
 
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col">
@@ -59,7 +61,7 @@ function ProfilePanel({ onClose }) {
             <h3 className="mb-3 text-xs font-medium uppercase tracking-wide text-prsSilver">
               Profile Picture
             </h3>
-            <div className="rounded-xl border border-prsSlate/80 bg-prsCharcoal/70 p-4">
+            <div className="rounded-xl border border-prsBorder bg-prsCharcoal/70 p-4">
               <div className="flex flex-col items-center gap-4 sm:flex-row">
                 <button
                   type="button"
@@ -97,7 +99,7 @@ function ProfilePanel({ onClose }) {
             <h3 className="mb-3 text-xs font-medium uppercase tracking-wide text-prsSilver">
               Full Name
             </h3>
-            <div className="rounded-xl border border-prsSlate/80 bg-prsCharcoal/70 p-4">
+            <div className="rounded-xl border border-prsBorder bg-prsCharcoal/70 p-4">
               <div className="flex items-center gap-3">
                 <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-prsBlue/10">
                   <UserIcon className="size-5 text-prsSky" />
@@ -130,7 +132,7 @@ function ProfilePanel({ onClose }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default ProfilePanel;
+export default ProfilePanel

@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router"
 import ChatPage from './pages/ChatPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
+import LandingPage from './pages/LandingPage'
 import { useAuthStore } from './store/useAuthStore.js'
 import { useChatStore } from './store/useChatStore.js'
 import PageLoader from './components/PageLoader.jsx'
@@ -37,7 +38,7 @@ function App() {
 
       <div className='relative z-10 min-h-0 w-full flex-1'>
         <Routes>
-          <Route path="/" element={authedChat(authUser)} />
+          <Route path="/" element={authUser ? <ChatPage /> : <LandingPage />} />
           <Route path="/chat/:userId" element={authedChat(authUser)} />
           <Route path="/settings" element={authedChat(authUser)} />
           <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" replace />} />

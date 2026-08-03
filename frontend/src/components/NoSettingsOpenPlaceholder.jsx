@@ -1,4 +1,4 @@
-import { SettingsIcon } from "lucide-react";
+import { SettingsIcon } from "lucide-react"
 
 function NoSettingsOpenPlaceholder() {
   return (
@@ -11,7 +11,7 @@ function NoSettingsOpenPlaceholder() {
         Select an option from the sidebar to view and manage your preferences.
       </p>
     </div>
-  );
+  )
 }
 
-export default NoSettingsOpenPlaceholder;
+export default NoSettingsOpenPlaceholder

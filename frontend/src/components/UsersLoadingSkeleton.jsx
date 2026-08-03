@@ -4,7 +4,7 @@ function UsersLoadingSkeleton() {
       {[1, 2, 3].map((item) => (
         <div
           key={item}
-          className="w-full px-4 py-2.5 border-b border-prsSlate/50 bg-prsCharcoal/50 animate-pulse lg:rounded-lg lg:border-b-0"
+          className="w-full px-4 py-2.5 border-b border-prsBorder bg-prsCharcoal/50 animate-pulse lg:rounded-lg lg:border-b-0"
         >
           <div className="flex items-center gap-3">
             <div className="size-12 shrink-0 rounded-full bg-prsGraphite" />

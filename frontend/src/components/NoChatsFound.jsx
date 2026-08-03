@@ -1,8 +1,8 @@
-import { MessageCircleIcon } from "lucide-react";
-import { useChatStore } from "../store/useChatStore.js";
+import { MessageCircleIcon } from "lucide-react"
+import { useChatStore } from "../store/useChatStore.js"
 
 function NoChatsFound() {
-  const { setActiveTab } = useChatStore();
+  const { setActiveTab } = useChatStore()
 
   return (
     <div className="flex flex-col items-center justify-center py-10 text-center space-y-4">
@@ -22,6 +22,7 @@ function NoChatsFound() {
         Find contacts
       </button>
     </div>
-  );
+  )
 }
-export default NoChatsFound;
+
+export default NoChatsFound

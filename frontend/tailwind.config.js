@@ -6,6 +6,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: ["border-prsBorder"],
   theme: {
     extend: {
       colors: {
@@ -16,7 +17,8 @@ export default {
         prsBlack:    "#0C1014",
         prsCharcoal: "#141A21",
         prsGraphite: "#1A2129",
-        prsSlate:    "#252B33",
+        prsSlate:    "#3D4856",
+        prsBorder:   "#3D4856",
         prsSilver:   "#8B949E",
         prsSnow:     "#E6EDF3",
         prsGray:     "#9BA4AE",
@@ -38,7 +40,7 @@ export default {
           "base-100": "#0C1014",
           "base-200": "#141A21",
           "base-300": "#1A2129",
-          neutral: "#252B33",
+          neutral: "#3D4856",
           "neutral-content": "#E6EDF3",
           info: "#0064E0",
           success: "#22c55e",
